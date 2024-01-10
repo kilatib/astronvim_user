@@ -18,7 +18,7 @@ return {
   },
 
   -- Set colorscheme to use
-  colorscheme = "astrodark",
+  colorscheme = "gruvbox",
 
   -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
   diagnostics = {
@@ -33,7 +33,10 @@ return {
       format_on_save = {
         enabled = true, -- enable or disable format on save globally
         allow_filetypes = { -- enable format on save for specified filetypes only
-          -- "go",
+          "lua",
+          "php",
+          "js",
+          "ts"
         },
         ignore_filetypes = { -- disable format on save for specified filetypes
           -- "python",
@@ -51,6 +54,26 @@ return {
     -- enable servers that you already have installed without mason
     servers = {
       -- "pyright"
+    },
+  },
+
+  dap = {
+    configurations = {
+      php = {
+        {
+          type = 'php',
+          request = 'launch',
+          name = 'DeliveryBe',
+          port = 9000,
+          pathMappings = {
+            ['/var/www/html'] = "${workspaceRoot}/tao-deliver-be",
+          },
+          proxy = {
+              key = 'deliver-be',
+              host= 'host.docker.internal'
+          },
+        }
+      },
     },
   },
 
