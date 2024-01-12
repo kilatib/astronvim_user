@@ -30,6 +30,19 @@ return {
     -- tables with the `name` key will be registered with which-key if it's installed
     -- this is useful for naming menus
     ["<leader>b"] = { name = "Buffers" },
+    ["<leader>T"] = { name = "Unit Tests" },
+    ["<leader>Tl"] = {
+      desc = "List",
+      function() require("neotest").summary.open() end,
+    },
+    ["<leader>Tr"] = {
+      desc = "Run last",
+      function() require("neotest").run.run_last() end,
+    },
+    ["<leader>Tm"] = {
+      desc = "Run marked",
+      function() require("neotest").summary.run_marked() end,
+    },
     -- quick save
     -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
   },

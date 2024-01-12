@@ -36,7 +36,7 @@ return {
           "lua",
           "php",
           "js",
-          "ts"
+          "ts",
         },
         ignore_filetypes = { -- disable format on save for specified filetypes
           -- "python",
@@ -61,18 +61,18 @@ return {
     configurations = {
       php = {
         {
-          type = 'php',
-          request = 'launch',
-          name = 'DeliveryBe',
+          type = "php",
+          request = "launch",
+          name = "DeliveryBe",
           port = 9000,
           pathMappings = {
-            ['/var/www/html'] = "${workspaceRoot}/tao-deliver-be",
+            ["/var/www/html"] = "${workspaceRoot}/tao-deliver-be",
           },
           proxy = {
-              key = 'deliver-be',
-              host= 'host.docker.internal'
+            key = "deliver-be",
+            host = "host.docker.internal",
           },
-        }
+        },
       },
     },
   },
@@ -92,6 +92,7 @@ return {
   -- augroups/autocommands and custom filetypes also this just pure lua so
   -- anything that doesn't fit in the normal config locations above can go here
   polish = function()
+    vim.opt.swapfile = false
     -- Set up custom filetypes
     -- vim.filetype.add {
     --   extension = {
