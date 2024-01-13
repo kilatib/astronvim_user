@@ -49,18 +49,21 @@ return {
           --     "-dmemory_limit=-1",
           --   },
           -- }
+          dap.defaults.fallback.switchbuf = "useopen"
           dap.configurations.php = {
             {
               type = "php",
-              request = "attach",
+              request = "launch",
               name = "DeliveryBe",
-              port = 9000,
+              port = 9003,
+              -- stopOnEntry = true,
+              -- pathMappings = {
+              --   ["/var/www/html"] = "${workspaceFolder}/tao-deliver-be",
+              --   ["/var/www/router.php"] = "${workspaceFolder}/docker/resourses/router.php",
+              -- },
               pathMappings = {
-                ["/var/www/html"] = "${workspaceRoot}/tao-deliver-be",
-              },
-              proxy = {
-                key = "deliver-be",
-                host = "host.docker.internal",
+                ["/var/www/html"] = "${workspaceFolder}",
+                ["/var/www/router.php"] = "${workspaceRoot}/../docker/resourses/router.php",
               },
             },
           }

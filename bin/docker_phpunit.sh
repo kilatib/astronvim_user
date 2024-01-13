@@ -39,7 +39,7 @@ dockerPath=$(docker inspect --format {{.Config.WorkingDir}} $container)
 # echo "Result: "$outputPath
 
 # Run the tests
-docker exec -i $container php -d memory_limit=-1 $phpunitPath ${args[@]}
+docker exec -it $container $phpunitPath -d memory_limit=-1 -d xdebug.idekey=deliver-be ${args[@]}
 
 # copy results
 docker cp -a "$container:$outputPath" "$outputPath"|- &> /dev/null

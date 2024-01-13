@@ -15,7 +15,9 @@ return {
           filter_dirs = { "vendor" },
           env = {
             REMOTE_PHPUNIT_BIN = "bin/phpunit",
+            XDEBUG_CONFIG = "idekey=neotest",
           },
+          dap = require("dap").configurations.php[1],
           phpunit_cmd = function()
             return "/usr/local/bin/dphpunit"
             -- return {
