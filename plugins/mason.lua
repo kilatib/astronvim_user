@@ -32,44 +32,4 @@ return {
       })
     end,
   },
-  {
-    "jay-babu/mason-nvim-dap.nvim",
-    -- overrides `require("mason-nvim-dap").setup(...)`
-    opts = {
-      ensure_installed = { "php", "chrome" },
-      automatic_installation = true,
-      handlers = {
-        function(config) require("mason-nvim-dap").default_setup(config) end,
-        php = function(config)
-          local dap = require "dap"
-          -- dap.adapters.php = {
-          --   type = "executable",
-          --   command = "/usr/bin/php",
-          --   args = {
-          --     "-dmemory_limit=-1",
-          --   },
-          -- }
-          dap.defaults.fallback.switchbuf = "useopen"
-          dap.configurations.php = {
-            {
-              type = "php",
-              request = "launch",
-              name = "DeliveryBe",
-              port = 9003,
-              -- stopOnEntry = true,
-              -- pathMappings = {
-              --   ["/var/www/html"] = "${workspaceFolder}/tao-deliver-be",
-              --   ["/var/www/router.php"] = "${workspaceFolder}/docker/resourses/router.php",
-              -- },
-              pathMappings = {
-                ["/var/www/html"] = "${workspaceFolder}",
-                ["/var/www/router.php"] = "${workspaceRoot}/../docker/resourses/router.php",
-              },
-            },
-          }
-          require("mason-nvim-dap").default_setup(config)
-        end,
-      },
-    },
-  },
 }
