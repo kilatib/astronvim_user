@@ -16,8 +16,20 @@ return {
         "tsserver",
         "marksman",
         "intelephense",
+        "phpactor",
         "yamlls",
       })
+      -- opts.handlers = {
+      --   ["phpactor"] = function()
+      --     require("lspconfig").phpactor.setup {
+      --       init_options = {
+      --         ["symfony.enabled"] = true,
+      --         ["phpunit.enabled"] = true,
+      --       },
+      --     }
+      --   end,
+      --   ["intelephense"] = function() require("lspconfig").intelephense.setup end,
+      -- }
     end,
   },
   -- use mason-null-ls to configure Formatters/Linter installation for null-ls sources
