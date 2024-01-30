@@ -20,6 +20,7 @@ return {
 
     -- mappings seen under group name "Buffer"
     ["<leader>lc"] = { ":Copilot panel<cr>", desc = "Copilot" }, -- change description but the same command
+    ["<leader>lce"] = { ":Copilot enable<cr>", desc = "Copilot" }, -- change description but the same command
     ["<leader>gR"] = { ":OpenInGHRepo<cr>", desc = "Save File" }, -- change description but the same command
     ["<leader>gf"] = { ":OpenInGHFile<cr>", desc = "Save File" }, -- change description but the same command
     ["<leader>bD"] = {

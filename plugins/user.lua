@@ -9,20 +9,44 @@ return {
   --     require("lsp_signature").setup()
   --   end,
   -- },
-   {
+  polish = function()
+    vim.opt.spelloptions = "camel"
+    vim.opt.spell = true
+    vim.opt.spelllang = "en_us"
+    vim.api.nvim_set_hl(
+      0, -- global highlight group
+      "SpellBad",
+      { fg = "red", underline = true }
+    )
+  end,
+  {
+    "xiantang/darcula-dark.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
+  },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      transparent = true,
+    },
+  },
+  {
     "ellisonleao/gruvbox.nvim",
     config = function()
-      local color_white = "#ebdbb2";
-      local color_gray = "#a1a1a1";
-      local color_black = "#282828";
-      local color_bg = "#232323";
-      local color_prompt = "#32302f";
-      local color_red = "#cc231d";
-      local color_yellow = "#d79921";
-      local color_green = "#b8bb26";
-      local color_orange = "#fe8019";
+      local color_white = "#ebdbb2"
+      local color_gray = "#a1a1a1"
+      local color_black = "#282828"
+      local color_bg = "#232323"
+      local color_prompt = "#32302f"
+      local color_red = "#cc231d"
+      local color_yellow = "#d79921"
+      local color_green = "#b8bb26"
+      local color_orange = "#fe8019"
 
-      require("gruvbox").setup({
+      require("gruvbox").setup {
         transparent_mode = true,
         overrides = {
           -- Status Line
@@ -59,9 +83,9 @@ return {
           -- Nerdtree and Nvim-Tree
           NERDTreeHelp = { link = "NONE" },
           -- WinBar
-          WinBarNC = { bg = color_black, fg = color_gray }
+          WinBarNC = { bg = color_black, fg = color_gray },
         },
-      })
+      }
     end,
   },
 }
