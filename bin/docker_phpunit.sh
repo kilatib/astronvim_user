@@ -29,6 +29,7 @@ done
 args=("${@/$projectPath\//}")
 
 # Detect path
+phpunitPath=$(docker exec -it $containerName /bin/bash -c "if [ -d bin/phpunit ]; then echo bin/phpunit; else echo vendor/bin/phpunit; fi" | tr -d '\r')
 container=$(docker ps -n=-1 --filter name=$containerName --format="{{.ID}}")
 dockerPath=$(docker inspect --format {{.Config.WorkingDir}} $container)
 
