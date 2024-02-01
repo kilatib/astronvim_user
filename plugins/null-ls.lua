@@ -12,10 +12,16 @@ return {
     config.sources = {
       -- Set a formatter
       null_ls.builtins.formatting.stylua,
-      null_ls.builtins.formatting.prettier,
+      null_ls.builtins.formatting.prettierd,
       null_ls.builtins.formatting.phpcbf,
       null_ls.builtins.formatting.phpcsfixer,
       null_ls.builtins.completion.spell,
+      null_ls.builtins.formatting.prettierd.with {
+        extra_filetypes = { "toml" },
+        env = {
+          PRETTIERD_DEFAULT_CONFIG = vim.fn.expand "~/.config/nvim/lua/user/plugins/conf/.prettierrc.json",
+        },
+      },
     }
     return config -- return final config table
   end,

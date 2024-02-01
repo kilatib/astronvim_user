@@ -8,7 +8,8 @@ return {
       function(config) require("mason-nvim-dap").default_setup(config) end,
       node2 = function(config)
         local dap = require "dap"
-        dap.defaults.fallback.switchbuf = "useopen"
+        -- dap.defaults.fallback.switchbuf = "usetab"
+        -- dap.defaults.fallback.switchbuf = "useopen,usetab"
         dap.configurations.typescript = {
           {
             type = "node2",
@@ -31,7 +32,7 @@ return {
       end,
       php = function(config)
         local dap = require "dap"
-        dap.defaults.fallback.switchbuf = "useopen"
+        -- dap.defaults.fallback.switchbuf = "useopen"
         dap.configurations.php = {
           {
             type = "php",
@@ -41,11 +42,11 @@ return {
             -- stopOnEntry = true,
             -- pathMappings = {
             --   ["/var/www/html"] = "${workspaceFolder}/tao-deliver-be",
-            --   ["/var/www/router.php"] = "${workspaceFolder}/docker/resourses/router.php",
+            --   ["/var/www/router.php"] = "${workspaceFolder}/docker/resources/router.php",
             -- },
             pathMappings = {
               ["/var/www/html"] = "${workspaceFolder}",
-              ["/var/www/router.php"] = "${workspaceFolder}/../docker/resourses/router.php",
+              ["/var/www/router.php"] = "${workspaceFolder}/../docker/resources/router.php",
             },
           },
         }
