@@ -4,6 +4,7 @@ globals = {
   "astronvim_installation",
   "vim",
   "bit",
+  "oat",
 }
 
 -- Rerun tests only if their modification time changed
