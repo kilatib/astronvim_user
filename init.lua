@@ -76,6 +76,9 @@ return {
         local oat = require "user/oat"
         oat.polish.copyring()
 
+        local copilot_options = { silent = true, expr = true, script = true }
+        vim.api.nvim_set_keymap("i", "<C-cr>", "copilot#Accept(<Tab>)", copilot_options)
+
         vim.opt.swapfile = false
         -- Set up custom filetypes
         -- vim.filetype.add {
