@@ -20,13 +20,18 @@ for i in $argsInput; do
         --log-junit=*)
             outputPath="${i#*=}"
             ;;
+        --filter=*)
+            filter="${i#*=}"
+            ;;
         *)
             ;;
     esac
 done
 
 # replace with local
-args=("${@/$projectPath\//}")
+args=("${argsInput[@]/$projectPath\//}")
+args=("${args/?$\//}")
+# args2=("${argsInput/$projectPath\//}")
 
 # Detect path
 phpunitPath=$(docker exec -it $containerName /bin/bash -c "if [ -d bin/phpunit ]; then echo bin/phpunit; else echo bin/phpunit; fi" | tr -d '\r')
@@ -40,8 +45,8 @@ dockerPath=$(docker inspect --format {{.Config.WorkingDir}} $container)
 # echo "Result: "$outputPath
 
 # Run the tests
-# docker exec -it $container /bin/sh -c "$phpunitPath -d memory_limit=-1 -d xdebug.idekey=deliver-be ${args[@]}"
-docker exec -it $container $phpunitPath -d memory_limit=-1 ${args[@]}
+docker exec -it $container /bin/sh -c "$phpunitPath -d memory_limit=-1 -d xdebug.idekey=deliver-be ${args[@]}"
+# docker exec -it $container $phpunitPath -d memory_limit=-1 ${args[@]}
 
 # copy results
 docker cp -a "$container:$outputPath" "$outputPath"|- &> /dev/null
