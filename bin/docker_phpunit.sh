@@ -20,19 +20,16 @@ for i in $argsInput; do
         --log-junit=*)
             outputPath="${i#*=}"
             ;;
-        --filter=*)
-            filter="${i#*=}"
-            ;;
         *)
             ;;
     esac
 done
 
 # replace with local
-args=("${argsInput[@]/$projectPath\//}")
-args=("${args/?$\//}")
-# args2=("${argsInput/$projectPath\//}")
+args=("${argsInput/$projectPath\//}")
+args=("${args//(*}")
 
+echo ${args[@]}
 # Detect path
 phpunitPath=$(docker exec -it $containerName /bin/bash -c "if [ -d bin/phpunit ]; then echo bin/phpunit; else echo bin/phpunit; fi" | tr -d '\r')
 container=$(docker ps -n=-1 --filter name=$containerName --format="{{.ID}}")
@@ -52,5 +49,5 @@ docker exec -it $container /bin/sh -c "$phpunitPath -d memory_limit=-1 -d xdebug
 docker cp -a "$container:$outputPath" "$outputPath"|- &> /dev/null
 
 # replace docker path to locals
-echo $dockerPath
+echo ${args[@]}
 sed -i '_' "s#$dockerPath#$projectPath#g" $outputPath
