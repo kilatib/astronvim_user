@@ -30,18 +30,20 @@ args=("${argsInput/$projectPath\//}")
 args=("${args//(*}")
 
 # Detect path
-phpunitPath=$(docker exec -it $containerName /bin/bash -c "if [ -d bin/phpunit ]; then echo bin/phpunit; else echo bin/phpunit; fi" | tr -d '\r')
+phpunitPath=$(docker exec -it $containerName /bin/bash -c "if [ -f bin/phpunit ]; then echo bin/phpunit; else echo vendor/bin/phpunit; fi" | tr -d '\r')
+execPath=$(docker exec -it $containerName /bin/bash -c "if [ -f /bin/sh ]; then echo /bin/sh; else echo /bin/bash; fi" | tr -d '\r')
 container=$(docker ps -n=-1 --filter name=$containerName --format="{{.ID}}")
 dockerPath=$(docker inspect --format {{.Config.WorkingDir}} $container)
 
 ## debug
-# echo "Params: "${args[@]}
-# echo "Docker: "$dockerPath
-# echo "Local:  "$projectPath
-# echo "Result: "$outputPath
+# echo "Raw ARGS: "${@}
+# echo "Params:   "${args[@]}
+# echo "Docker:   "$dockerPath
+# echo "Local:    "$projectPath
+# echo "Result:   "$outputPath
 
 # Run the tests
-docker exec -it $container /bin/sh -c "$phpunitPath -d memory_limit=-1 -d xdebug.idekey=deliver-be ${args[@]}"
+docker exec -it $container $execPath -c "SYMFONY_DEPRECATIONS_HELPER=weak $phpunitPath -d memory_limit=-1 -d xdebug.idekey=deliver-be ${args}"
 # docker exec -it $container $phpunitPath -d memory_limit=-1 ${args[@]}
 
 # copy results
@@ -49,3 +51,4 @@ docker cp -a "$container:$outputPath" "$outputPath"|- &> /dev/null
 
 # replace docker path to locals
 sed -i '_' "s#$dockerPath#$projectPath#g" $outputPath
+

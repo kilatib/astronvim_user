@@ -2,6 +2,7 @@ return {
     "nvim-neotest/neotest",
     lazy = true,
     dependencies = {
+        "nvim-neotest/nvim-nio",
         "nvim-lua/plenary.nvim",
         "antoinemadec/FixCursorHold.nvim",
         "nvim-treesitter/nvim-treesitter",
@@ -15,15 +16,11 @@ return {
                 jestConfigFile = "jest.config.ts",
                 env = { CI = true, TZ = UTC },
                 cwd = function(path) return vim.fn.getcwd() end,
-                jest_test_discovery = false,
-                discovery = {
-                    enabled = false,
-                },
             },
             adapters = {
                 require "neotest-phpunit" {
                     root_files = { "composer.json", "phpunit.xml", "phpunit.xml.dist", ".github" },
-                    filter_dirs = { "vendor" },
+                    filter_dirs = { "vendor", "src" },
                     env = {
                         REMOTE_PHPUNIT_BIN = "bin/phpunit",
                         XDEBUG_CONFIG = "idekey=neotest",

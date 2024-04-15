@@ -58,9 +58,11 @@ return {
         -- overrides `require("mason-null-ls").setup(...)`
         opts = function(_, opts)
             -- add more things to the ensure_installed table protecting against community packs modifying it
+            opts.automatic_installation = true
             opts.ensure_installed = require("astronvim.utils").list_insert_unique(opts.ensure_installed, {
-                "prettier",
                 "stylua",
+                "prettierd",
+                "phpcbf",
             })
         end,
     },
