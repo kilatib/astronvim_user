@@ -11,7 +11,8 @@ pushd $phpTestPath > /dev/null
 projectPath="$(git rev-parse --show-toplevel)"
 pushd > /dev/null
 
-containerName=$(sed 's#.*/##' <<< $projectPath | sed s/-/_/g)
+subPath=$(awk -F '/vendor/' '{print $1}' <<< $projectPath)
+containerName=$(sed 's#.*/##' <<< $subPath | sed s/-/_/g)
 containerName=nextgen_$(sed 's#-#_#' <<< $containerName)
 
 ## detect test result output
@@ -26,7 +27,7 @@ for i in $argsInput; do
 done
 
 # replace with local
-args=("${argsInput/$projectPath\//}")
+args=("${argsInput/$subPath\//}")
 args=("${args//(*}")
 
 # Detect path
