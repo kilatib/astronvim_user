@@ -1,5 +1,3 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- Customize None-ls sources
 
 ---@type LazySpec
@@ -12,34 +10,34 @@ return {
     -- Check supported formatters and linters
     -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/formatting
     -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
+    local null_ls = require "null-ls"
+    local cspell = require "cspell"
     config.sources = {
       -- Set a formatter
-      -- null_ls.builtins.formatting.stylua,
-      -- null_ls.builtins.formatting.prettier,
       null_ls.builtins.formatting.stylua,
       null_ls.builtins.formatting.prettierd,
       null_ls.builtins.formatting.phpcbf,
       null_ls.builtins.formatting.phpcsfixer,
       null_ls.builtins.completion.spell,
-      null_ls.builtins.diagnostics.cspell,
-      null_ls.builtins.code_actions.cspell,
       null_ls.builtins.diagnostics.codespell,
       null_ls.builtins.diagnostics.write_good,
       null_ls.builtins.formatting.phpcsfixer.with {
-          args = {
-              "--standard=PSR12",
-              "--config",
-              "phpcs.xml.dist",
-          },
-          filetypes = { "php" },
-          condition = function(utils) return utils.root_has_file "phpcs.xml.dist" end,
+        args = {
+          "--standard=PSR12",
+          "--config",
+          "phpcs.xml.dist",
+        },
+        filetypes = { "php" },
+        condition = function(utils) return utils.root_has_file "phpcs.xml.dist" end,
       },
       null_ls.builtins.formatting.prettierd.with {
-          extra_filetypes = { "toml" },
-          env = {
-              PRETTIERD_DEFAULT_CONFIG = vim.fn.expand "~/.config/nvim/lua/user/plugins/conf/.prettierrc.json",
-          },
+        extra_filetypes = { "toml" },
+        env = {
+          PRETTIERD_DEFAULT_CONFIG = vim.fn.expand "~/.config/nvim/lua/user/plugins/conf/.prettierrc.json",
+        },
       },
+      cspell.diagnostics,
+      cspell.code_actions,
     }
     return config -- return final config table
   end,
