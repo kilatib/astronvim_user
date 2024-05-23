@@ -7,4 +7,5 @@ brew install ripgrep
 brew install lazygit
 brew install -f gdu
 brew install bottom
+brew install watch fswatch
 

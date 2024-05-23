@@ -12,6 +12,10 @@ return {
     -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
     local null_ls = require "null-ls"
     local cspell = require "cspell"
+    local cspellConfig = {
+      config_file_preferred_name = ".cspell.json",
+      find_json = function() return "/Users/checkster/.config/nvim/spell/cspell.json" end,
+    }
     config.sources = {
       -- Set a formatter
       null_ls.builtins.formatting.stylua,
@@ -36,8 +40,8 @@ return {
           PRETTIERD_DEFAULT_CONFIG = vim.fn.expand "~/.config/nvim/lua/user/plugins/conf/.prettierrc.json",
         },
       },
-      cspell.diagnostics,
-      cspell.code_actions,
+      cspell.diagnostics.with { config = cspellConfig },
+      cspell.code_actions.with { config = cspellConfig },
     }
     return config -- return final config table
   end,
