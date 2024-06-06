@@ -18,41 +18,40 @@ return {
         "tsserver",
         "marksman",
         "intelephense",
-        -- "phpactor",
         "yamlls",
         -- add more arguments for adding more language servers
       })
-      local lspconfig = require "lspconfig"
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities.textDocument.completion.completionItem.snippetSupport = true
-      lspconfig.intelephense.setup {
-          capabilities = capabilities,
-          settings = {
-              intelephense = {
-                  references = {
-                      excluded = {
-                          "**/vendor/**/{Tests,tests}/**",
-                      },
-                  },
-                  environment = {
-                      includePaths = {
-                          "./tests",
-                          "./src",
-                          "./vendor",
-                          "vendor",
-                          "./tests/**",
-                          "./src/**",
-                          "./vendor/**",
-                          "**/vendor/**",
-                          "**/vendor/**/runtime/**",
-                          "**/src/**",
-                          "**/tests/**",
-                      },
-                      phpVersion = "8.2",
-                  },
-              },
-          },
-      }
+      -- local lspconfig = require "lspconfig"
+      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+      -- capabilities.textDocument.completion.completionItem.snippetSupport = true
+      -- lspconfig.intelephense.setup {
+      --   capabilities = capabilities,
+      --   settings = {
+      --     intelephense = {
+      --       files = {
+      --         exclude = {
+      --           "**/.git/**",
+      --           "**/.svn/**",
+      --           "**/.hg/**",
+      --           "**/CVS/**",
+      --           "**/.DS_Store/**",
+      --           "**/node_modules/**",
+      --           "**/bower_components/**",
+      --           "**/.history/**",
+      --         },
+      --       },
+      --       environment = {
+      --         shortOpenTag = false,
+      --         includePaths = {
+      --           "**/vendor/**/{Tests,tests}/**",
+      --           "**/vendor/**/vendor/**",
+      --           "**/qtism/**",
+      --         },
+      --         phpVersion = "8.2",
+      --       },
+      --     },
+      --   },
+      -- }
     end,
   },
   -- use mason-null-ls to configure Formatters/Linter installation for null-ls sources

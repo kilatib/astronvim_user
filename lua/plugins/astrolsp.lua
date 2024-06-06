@@ -36,7 +36,7 @@ return {
       disabled = { -- disable formatting capabilities for the listed language servers
         -- disable lua_ls formatting capability if you want to use StyLua to format your lua code
         -- "lua_ls",
-        "intelephense",
+        -- "intelephense",
       },
       timeout_ms = 1000, -- default format timeout
       -- filter = function(client) -- fully override the default formatting function
@@ -60,6 +60,39 @@ return {
       -- the key is the server that is being setup with `lspconfig`
       -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
       -- pyright = function(_, opts) require("lspconfig").pyright.setup(opts) end -- or a custom handler function can be passed
+      intelephense = function(_, opts)
+        local capabilities = vim.lsp.protocol.make_client_capabilities()
+        capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+        require("lspconfig").intelephense.setup {
+          capabilities = capabilities,
+          on_attach = opts.on_attach,
+          settings = {
+            intelephense = {
+              files = {
+                exclude = {
+                  "**/.git/**",
+                  "**/.svn/**",
+                  "**/.hg/**",
+                  "**/CVS/**",
+                  "**/.DS_Store/**",
+                  "**/node_modules/**",
+                  "**/bower_components/**",
+                  "**/.history/**",
+                },
+              },
+              environment = {
+                shortOpenTag = false,
+                includePaths = {
+                  "vendor/qtism/qtism/**",
+                  "vendor/**",
+                },
+                phpVersion = "8.2",
+              },
+            },
+          },
+        }
+      end,
     },
     -- Configure buffer local auto commands to add when attaching a language server
     autocmds = {
@@ -90,6 +123,7 @@ return {
     mappings = {
       n = {
         gl = { function() vim.diagnostic.open_float() end, desc = "Hover diagnostics" },
+        gd = { function() vim.lsp.buf.definition() end, desc = "Go to Definition" },
         -- a `cond` key can provided as the string of a server capability to be required to attach, or a function with `client` and `bufnr` parameters from the `on_attach` that returns a boolean
         -- gD = {
         --   function() vim.lsp.buf.declaration() end,
