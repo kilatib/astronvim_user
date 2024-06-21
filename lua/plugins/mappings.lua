@@ -29,9 +29,21 @@ return {
             desc = "Run last",
             function() require("neotest").run.run_last() end,
           },
+          ["<leader>Tf"] = {
+            desc = "Run current file",
+            function() require("neotest").run.run(vim.fn.expand("%")) end,
+          },
           ["<leader>Tm"] = {
             desc = "Run marked",
             function() require("neotest").summary.run_marked() end,
+          },
+          ["<leader>Tn"] = {
+            desc = "Run nearest test",
+            function() require("neotest").run.run() end,
+          },
+          ["<leader>Td"] = {
+            desc = "Run with debug",
+            function() require("neotest").run.run({strategy = "dap"}) end,
           },
           ["<leader>r"] = {
             name = "Rest Requests",
@@ -46,6 +58,18 @@ return {
           },
         },
         t = {},
+        v = {
+          ["<leader>lj"] = {
+            desc = "Format select JSON",
+            ":'<,'>!python3 -m json.tool<cr>",
+          },
+        },
+        i = {
+          ["<C-CR>"] = {
+            desc = "Apply copilot suggestions",
+            'copilot#Accept("<CR>")',
+          }
+        }
       },
     },
   },
