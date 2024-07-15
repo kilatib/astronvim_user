@@ -4,6 +4,7 @@
 phpunitPath=$REMOTE_PHPUNIT_BIN
 
 # detect local path and remove from args
+localPhpUnitResultPath='/tmp/phpunit-result.xml'
 argsInput=${@}
 runFile=$(echo $argsInput| awk '{print $1}')
 phpTestPath=$(dirname "$runFile")
@@ -44,11 +45,11 @@ dockerPath=$(docker inspect --format {{.Config.WorkingDir}} $container)
 # echo "Result:   "$outputPath
 
 # Run the tests
-docker exec -it $container $execPath -c "SYMFONY_DEPRECATIONS_HELPER=weak $phpunitPath -d memory_limit=-1 -d xdebug.idekey=deliver-be ${args}"
+docker exec -it $container $execPath -c "SYMFONY_DEPRECATIONS_HELPER=weak $phpunitPath -d memory_limit=-1 -d xdebug.idekey=deliver-be ${args} --log-junit=${localPhpUnitResultPath}"
 # docker exec -it $container $phpunitPath -d memory_limit=-1 ${args[@]}
 
 # copy results
-docker cp -a "$container:$outputPath" "$outputPath"|- &> /dev/null
+docker cp -a "$container:$localPhpUnitResultPath" "$outputPath"|- &> /dev/null
 
 # replace docker path to locals
 sed -i '_' "s#$dockerPath#$projectPath#g" $outputPath
