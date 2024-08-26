@@ -31,7 +31,7 @@ return {
           },
           ["<leader>Tf"] = {
             desc = "Run current file",
-            function() require("neotest").run.run(vim.fn.expand("%")) end,
+            function() require("neotest").run.run(vim.fn.expand "%") end,
           },
           ["<leader>Tm"] = {
             desc = "Run marked",
@@ -43,7 +43,7 @@ return {
           },
           ["<leader>Td"] = {
             desc = "Run with debug",
-            function() require("neotest").run.run({strategy = "dap"}) end,
+            function() require("neotest").run.run { strategy = "dap" } end,
           },
           ["<leader>r"] = {
             name = "Rest Requests",
@@ -55,6 +55,29 @@ return {
           ["<leader>rl"] = {
             desc = "Run last request",
             "<cmd>Rest run last<cr>",
+          },
+          ["<leader>k"] = {
+            desc = "Toggle LazyDocker",
+            "<cmd>LazyDocker<CR>",
+          },
+          ["<leader>dt"] = {
+            desc = "Telescope dap",
+          },
+          ["<leader>dtb"] = {
+            desc = "List break points",
+            "<cmd>Telescope dap list_breakpoints<CR>",
+          },
+          ["<leader>dtc"] = {
+            desc = "Commands",
+            "<cmd>Telescope dap commands<CR>",
+          },
+          ["<leader>dtf"] = {
+            desc = "Frames",
+            "<cmd>Telescope dap frames<CR>",
+          },
+          ["<leader>dtv"] = {
+            desc = "Variables",
+            "<cmd>Telescope dap variables<CR>",
           },
         },
         t = {},
@@ -68,8 +91,8 @@ return {
           ["<C-CR>"] = {
             desc = "Apply copilot suggestions",
             'copilot#Accept("<CR>")',
-          }
-        }
+          },
+        },
       },
     },
   },
