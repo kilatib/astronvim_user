@@ -14,7 +14,7 @@ return {
     local cspell = require "cspell"
     local cspellConfig = {
       config_file_preferred_name = ".cspell.json",
-      find_json = function() return "/Users/checkster/.config/nvim/spell/cspell.json" end,
+      find_json = function() return vim.fn.expand "~/.config/nvim/spell/cspell.json" end,
     }
     config.sources = {
       -- Set a formatter
@@ -37,7 +37,7 @@ return {
       null_ls.builtins.formatting.prettierd.with {
         extra_filetypes = { "toml" },
         env = {
-          PRETTIERD_DEFAULT_CONFIG = vim.fn.expand "~/.config/nvim/lua/user/plugins/conf/.prettierrc.json",
+          PRETTIERD_DEFAULT_CONFIG = vim.fn.expand "~/.config/nvim/lua/plugins/conf/.prettierrc.json",
         },
       },
       cspell.diagnostics.with { config = cspellConfig },
