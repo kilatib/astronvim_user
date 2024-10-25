@@ -37,7 +37,7 @@ return {
       null_ls.builtins.formatting.prettierd.with {
         extra_filetypes = { "toml" },
         env = {
-          PRETTIERD_DEFAULT_CONFIG = vim.fn.expand "~/.config/nvim/lua/plugins/conf/.prettierrc.json",
+          PRETTIERD_DEFAULT_CONFIG = vim.fn.expand "~/.config/nvim/lua/plugins/conf/prettier-config/index.json",
         },
       },
       cspell.diagnostics.with { config = cspellConfig },
