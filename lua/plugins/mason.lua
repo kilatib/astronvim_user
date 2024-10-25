@@ -37,6 +37,7 @@ return {
         "phpcbf",
         "write_good",
         "cspell",
+        "xmlformat",
         "pell",
         "codespell",
         "phpcsfixer",

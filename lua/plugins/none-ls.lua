@@ -22,6 +22,7 @@ return {
       null_ls.builtins.formatting.prettierd,
       null_ls.builtins.formatting.phpcbf,
       null_ls.builtins.formatting.phpcsfixer,
+      null_ls.builtins.formatting.xmlformat,
       null_ls.builtins.completion.spell,
       null_ls.builtins.diagnostics.codespell,
       null_ls.builtins.diagnostics.write_good,
