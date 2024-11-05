@@ -31,26 +31,38 @@ done
 args=("${argsInput/$subPath\//}")
 args=("${args//(*}")
 
-# Detect path
-phpunitPath=$(docker exec -it $containerName /bin/bash -c "if [ -f vendor/bin/phpunit ]; then echo vendor/bin/phpunit; else echo bin/phpunit; fi" | tr -d '\r')
-execPath=$(docker exec -it $containerName /bin/bash -c "if [ -f /bin/sh ]; then echo /bin/sh; else echo /bin/bash; fi" | tr -d '\r')
-container=$(docker ps -n=-1 --filter name=$containerName --format="{{.ID}}")
-dockerPath=$(docker inspect --format {{.Config.WorkingDir}} $container)
 
-## debug
-# echo "Raw ARGS: "${@}
-# echo "Params:   "${args[@]}
-# echo "Docker:   "$dockerPath
-# echo "Local:    "$projectPath
-# echo "Result:   "$outputPath
+if [ $(docker ps -a --filter "name=$containerName" --format '{{.Names}}' | grep -w "$containerName" | wc -l) -eq 1 ]; then 
+    # Detect path
+    phpunitPath=$(docker exec -it $containerName /bin/bash -c "if [ -f vendor/bin/phpunit ]; then echo vendor/bin/phpunit; else echo bin/phpunit; fi" | tr -d '\r')
+    execPath=$(docker exec -it $containerName /bin/bash -c "if [ -f /bin/sh ]; then echo /bin/sh; else echo /bin/bash; fi" | tr -d '\r')
+    container=$(docker ps -n=-1 --filter name=$containerName --format="{{.ID}}")
+    dockerPath=$(docker inspect --format {{.Config.WorkingDir}} $container)
 
-# Run the tests
-docker exec -it $container $execPath -c "SYMFONY_DEPRECATIONS_HELPER=weak $phpunitPath -d memory_limit=-1 -d xdebug.idekey=deliver-be ${args} --log-junit=${localPhpUnitResultPath}"
-# docker exec -it $container $phpunitPath -d memory_limit=-1 ${args[@]}
+    ## debug
+    # echo "Raw ARGS: "${@}
+    # echo "Params:   "${args[@]}
+    # echo "Docker:   "$dockerPath
+    # echo "Local:    "$projectPath
+    # echo "Result:   "$outputPath
 
-# copy results
-docker cp -a "$container:$localPhpUnitResultPath" "$outputPath"|- &> /dev/null
+    # Run the tests
+    docker exec -it $container $execPath -c "SYMFONY_DEPRECATIONS_HELPER=weak $phpunitPath -d memory_limit=-1 -d xdebug.idekey=deliver-be ${args} --log-junit=${localPhpUnitResultPath}"
+    # docker exec -it $container $phpunitPath -d memory_limit=-1 ${args[@]}
 
-# replace docker path to locals
-sed -i '_' "s#$dockerPath#$projectPath#g" $outputPath
+    # copy results
+    docker cp -a "$container:$localPhpUnitResultPath" "$outputPath"|- &> /dev/null
+
+    # replace docker path to locals
+    sed -i '_' "s#$dockerPath#$projectPath#g" $outputPath
+else 
+    if [ -f vendor/bin/phpunit ]; 
+    then 
+        phpunitPath=vendor/bin/phpunit; 
+    else 
+        phpunitPath=bin/phpunit; 
+    fi
+    SYMFONY_DEPRECATIONS_HELPER=weak $phpunitPath -d memory_limit=-1 -d xdebug.idekey=deliver-be ${args}
+fi
+
 
