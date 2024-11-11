@@ -11,13 +11,13 @@ return {
   },
   config = function()
     require("neotest").setup {
-      require "neotest-jest" {
-        jestCommand = "npm test --",
-        jestConfigFile = "jest.config.ts",
-        env = { CI = true, TZ = UTC },
-        cwd = function(path) return vim.fn.getcwd() end,
-      },
       adapters = {
+        require "neotest-jest" {
+          jestCommand = "npm test --",
+          jestConfigFile = "jest.config.js",
+          env = { CI = true, TZ = UTC, NODE_ENV=test },
+          cwd = function(path) return vim.fn.getcwd() end,
+        },
         require "neotest-phpunit" {
           root_files = { "composer.json", "phpunit.xml", "phpunit.xml.dist", ".github" },
           filter_dirs = { "src" },
