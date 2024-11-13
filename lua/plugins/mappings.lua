@@ -79,6 +79,10 @@ return {
             desc = "Variables",
             "<cmd>Telescope dap variables<CR>",
           },
+          ["<leader>K"] = {
+            desc = "Kubectl",
+            function() require("kubectl").toggle() end,
+          },
         },
         t = {},
         v = {
