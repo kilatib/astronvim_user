@@ -9,5 +9,7 @@ brew install -f gdu
 brew install bottom
 brew install watch fswatch
 
-cd lua/plugins/config 
+cd lua/plugins/conf
 git clone git@github.com:oat-sa/prettier-config.git
+git clone git@github.com:oat-sa/eslint-config-tao.git
+

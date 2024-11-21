@@ -41,6 +41,7 @@ return {
         "pell",
         "codespell",
         "phpcsfixer",
+        "eslint_d",
         -- add more arguments for adding more null-ls sources
       })
     end,
