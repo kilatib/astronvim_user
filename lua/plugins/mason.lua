@@ -16,8 +16,6 @@ return {
         "docker_compose_language_service",
         "jsonls",
         "eslint",
-        "biome",
-        "ts_ls",
         "marksman",
         "intelephense",
         "yamlls",
