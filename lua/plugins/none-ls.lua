@@ -3,6 +3,9 @@
 ---@type LazySpec
 return {
   "nvimtools/none-ls.nvim",
+  dependencies = {
+    "nvimtools/none-ls-extras.nvim",
+  },
   opts = function(_, config)
     -- config variable is the default configuration table for the setup function call
     -- local null_ls = require "null-ls"
@@ -35,7 +38,6 @@ return {
       formatting.stylua,
       formatting.prettierd,
       formatting.phpcbf,
-      formatting.phpcsfixer,
       completion.spell,
       formatting.phpcsfixer.with {
         args = {
@@ -47,26 +49,34 @@ return {
         condition = function(utils) return utils.root_has_file "phpcs.xml.dist" end,
       },
       formatting.prettierd.with {
-        extra_filetypes = { "toml", "ts", "js", "svetle" },
+        extra_filetypes = { "toml", "ts", "js", "svetle", "typescript", "jsonc" },
         env = {
-          PRETTIERD_DEFAULT_CONFIG = vim.fn.expand "~/.config/nvim/lua/plugins/conf/prettier-config/index.json",
+          PRETTIERD_DEFAULT_CONFIG = function()
+            local globalFile = vim.fn.expand "~/.config/nvim/lua/plugins/conf/prettier-config/index.json"
+            local localFile = vim.loop.cwd() .. ".prettierrc.json"
+            if file_exists(localFile) then
+              return localFile
+            else
+              return globalFile
+            end
+          end,
         },
       },
-      diagnostics.codespell,
-      diagnostics.write_good,
-      -- diagnostics.eslint_d
-      --   .with {
-      --   extra_args = function(params)
-      --     local file_types = { "js", "cjs", "yaml", "yml", "json" }
-      --     for _, file_type in pairs(file_types) do
-      --       if file_exists(params.root .. "/.eslintrc." .. file_type) then return {} end
-      --     end
-      --     return {
-      --       -- "--config",
-      --       -- vim.fn.expand "~/.config/nvim/lua/plugins/conf/eslint-config-tao/.eslintrc.js",
-      --     }
-      --   end,
-      -- },
+      -- diagnostics.codespell,
+      -- diagnostics.write_good,
+      require("none-ls.diagnostics.eslint_d")
+        .with {
+        extra_args = function(params)
+          local file_types = { "js", "cjs", "yaml", "yml", "json" }
+          for _, file_type in pairs(file_types) do
+            if file_exists(params.root .. "/.eslintrc." .. file_type) then return {} end
+          end
+          return {
+            "--config",
+            "~/.config/nvim/lua/plugins/conf/eslint-config-tao/index.js",
+          }
+        end,
+      },
       cspell.diagnostics.with { config = cspellConfig },
       cspell.code_actions.with { config = cspellConfig },
     }
