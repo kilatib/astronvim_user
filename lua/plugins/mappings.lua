@@ -7,6 +7,9 @@ return {
         -- first key is the mode
         n = {
           ["<leader>lc"] = { ":Copilot panel<cr>", desc = "Copilot" }, -- change description but the same command
+          ["<leader>lF"] = { function ()
+           require("conform").format({ async = true, lsp_fallback = true }) 
+          end, desc = "Format selection" }, -- change description but the same command
           ["<leader>lce"] = { ":Copilot enable<cr>", desc = "Copilot Enable" }, -- change description but the same command
           ["<leader>gR"] = { ":OpenInGHRepo<cr>", desc = "Open github repository" }, -- change description but the same command
           ["<leader>gf"] = { ":OpenInGHFile<cr>", desc = "Open file on github" }, -- change description but the same command
