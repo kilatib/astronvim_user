@@ -8,11 +8,10 @@ return {
         n = {
           ["<leader>lc"] = { ":Copilot panel<cr>", desc = "Copilot" }, -- change description but the same command
           ["<leader>lF"] = { function ()
-           require("conform").format({ async = true, lsp_fallback = true }) 
+           require("conform").format({ async = true, lsp_fallback = true })
           end, desc = "Format selection" }, -- change description but the same command
           ["<leader>lce"] = { ":Copilot enable<cr>", desc = "Copilot Enable" }, -- change description but the same command
-          ["<leader>gR"] = { ":OpenInGHRepo<cr>", desc = "Open github repository" }, -- change description but the same command
-          ["<leader>gf"] = { ":OpenInGHFile<cr>", desc = "Open file on github" }, -- change description but the same command
+          ["<leader>gf"] = { ":Browsher commit<cr>", desc = "Open file on github" }, -- change description but the same command
           ["<leader>bD"] = {
             function()
               require("astronvim.utils.status").heirline.buffer_picker(
@@ -93,6 +92,7 @@ return {
             desc = "Format select JSON",
             ":'<,'>!python3 -m json.tool<cr>",
           },
+          ["<leader>gf"] = { ":'<,'>Browsher commit<CR>gv", desc = "Open file on github" }, -- change description but the same command
         },
         i = {
           ["<C-CR>"] = {

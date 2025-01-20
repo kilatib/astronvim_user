@@ -13,3 +13,4 @@ cd lua/plugins/conf
 git clone git@github.com:oat-sa/prettier-config.git
 git clone git@github.com:oat-sa/eslint-config-tao.git
 
+sudo ln -s $(which wslview) /usr/local/bin/xdg-open
