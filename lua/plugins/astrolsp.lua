@@ -67,6 +67,9 @@ return {
         require("lspconfig").intelephense.setup {
           capabilities = capabilities,
           on_attach = opts.on_attach,
+          init_options = {
+            licenceKey='00Q152AEXSCX41B'
+          },
           settings = {
             intelephense = {
               files = {

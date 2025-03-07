@@ -20,8 +20,8 @@ return {
         command = "php-cs-fixer",
         args = {
           "fix",
-          "--config=phpcs.xml.dist",
-          "--rules=@PSR12", -- Formatting preset. Other presets are available, see the php-cs-fixer docs.
+          -- "--config=phpcs.xml.dist",
+          -- "--rules=@PSR12", -- Formatting preset. Other presets are available, see the php-cs-fixer docs.
           "$FILENAME",
         },
         stdin = false,
