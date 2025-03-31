@@ -18,7 +18,7 @@ return {
         "eslint",
         "marksman",
         "intelephense",
-        "yamlls",
+        "yamlls"
         -- add more arguments for adding more language servers
       })
     end,
@@ -38,6 +38,8 @@ return {
         "codespell",
         "phpcsfixer",
         "eslint_d",
+        "xmlformatter",
+        "xmllint"
         -- add more arguments for adding more null-ls sources
       })
     end,

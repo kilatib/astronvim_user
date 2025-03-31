@@ -4,8 +4,11 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   opts = {
     formatters_by_ft = {
+      ["php.dist"] = { "php-cs-fixer" },
       php = { "php-cs-fixer" },
       lua = { "stylua" },
+      xml = { "xmlformatter" },
+      ["xml.dist"] = { "xmlformatter" },
 
       -- You can customize some of the format options for the filetype (:help conform.format)
       rust = { "rustfmt", lsp_format = "fallback" },
@@ -13,11 +16,11 @@ return {
       javascript = { "prettierd", "prettier", stop_after_first = true },
       typescript = { "prettierd", "prettier", stop_after_first = true },
       svetle = { "prettierd", "prettier", stop_after_first = true },
-      html = {"htmlbeautifier"},
+      html = { "htmlbeautifier" },
     },
     formatters = {
       ["php-cs-fixer"] = {
-        command = "php-cs-fixer",
+        command = "vendor/bin/php-cs-fixer",
         args = {
           "fix",
           -- "--config=phpcs.xml.dist",
@@ -26,15 +29,28 @@ return {
         },
         stdin = false,
       },
-      ['prettierd'] = {
+      ["prettierd"] = {
         command = "prettierd",
         env = {
-          string.format('PRETTIERD_DEFAULT_CONFIG=%s', vim.fn.expand('~/.config/nvim/lua/plugins/conf/prettier-config/index.json')),
+          string.format(
+            "PRETTIERD_DEFAULT_CONFIG=%s",
+            vim.fn.expand "~/.config/nvim/lua/plugins/conf/prettier-config/index.json"
+          ),
         },
         args = { "--stdin-filepath", "$FILENAME" },
-        root_patterns = { ".prettierrc", ".prettierrc.json", ".prettierrc.yaml", ".prettierrc.yml", ".prettierrc.js", ".prettierrc.cjs", ".prettierrc.config.js", "package.json" },
+        root_patterns = {
+          ".prettierrc",
+          ".prettierrc.json",
+          ".prettierrc.yaml",
+          ".prettierrc.yml",
+          ".prettierrc.js",
+          ".prettierrc.cjs",
+          ".prettierrc.config.js",
+          "package.json",
+        },
       },
     },
     notify_on_error = true,
+    -- format_on_save = true,
   },
 }
