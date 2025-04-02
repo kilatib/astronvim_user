@@ -15,5 +15,9 @@ if not pcall(require, "lazy") then
   vim.cmd.quit()
 end
 
+vim.g.copilot_filetypes = {
+    gitcommit = true,
+}
+
 require "lazy_setup"
 require "polish"

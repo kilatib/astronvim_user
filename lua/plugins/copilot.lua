@@ -4,6 +4,7 @@ return {
         "php",
         "javascript",
         "typescript",
+        "gitcommit"
     },
     event = "InsertEnter",
 }
