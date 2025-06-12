@@ -2,28 +2,29 @@
 
 ---@type LazySpec
 return {
-  "nvim-treesitter/nvim-treesitter",
-  opts = function(_, opts)
-    -- add more things to the ensure_installed table protecting against community packs modifying it
-    opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
-      "lua",
-      "bash",
-      "cmake",
-      "json",
-      "jsonnet",
-      "typescript",
-      "javascript",
-      "yaml",
-      "xml",
-      "php",
-      "phpdoc",
-      "svelte",
-      "xml",
-      "http",
-      "json",
-      "graphql",
-      "ini",
-      -- add more arguments for adding more treesitter parsers
-    })
-  end,
+	"nvim-treesitter/nvim-treesitter",
+	opts = {
+		ensure_installed = {
+			"lua",
+			"vim",
+			"bash",
+			"cmake",
+			"json",
+			"jsonnet",
+			"typescript",
+			"javascript",
+			"yaml",
+			"xml",
+			"php",
+			"phpdoc",
+			"svelte",
+			"xml",
+			"http",
+			"json",
+			"graphql",
+			"ini",
+
+			-- add more arguments for adding more treesitter parsers
+		},
+	},
 }

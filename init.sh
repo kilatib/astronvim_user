@@ -8,6 +8,7 @@ brew install lazygit
 brew install -f gdu
 brew install bottom
 brew install watch fswatch
+brew install eslint_d
 
 cd lua/plugins/conf
 git clone git@github.com:oat-sa/prettier-config.git

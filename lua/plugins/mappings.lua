@@ -1,106 +1,77 @@
 return {
-  {
-    "AstroNvim/astrocore",
-    ---@type AstroCoreOpts
-    opts = {
-      mappings = {
-        -- first key is the mode
-        n = {
-          ["<leader>lc"] = { ":Copilot panel<cr>", desc = "Copilot" }, -- change description but the same command
-          ["<leader>lF"] = { function ()
-           require("conform").format({ async = true, lsp_fallback = false })
-          end, desc = "Format selection" }, -- change description but the same command
-          ["<leader>lce"] = { ":Copilot enable<cr>", desc = "Copilot Enable" }, -- change description but the same command
-          ["<leader>gf"] = { ":Browsher commit<cr>", desc = "Open file on github" }, -- change description but the same command
-          ["<leader>bD"] = {
-            function()
-              require("astronvim.utils.status").heirline.buffer_picker(
-                function(bufnr) require("astronvim.utils.buffer").close(bufnr) end
-              )
-            end,
-            desc = "Pick to close",
-          },
-          -- tables with the `name` key will be registered with which-key if it's installed
-          -- this is useful for naming menus
-          ["<leader>T"] = { name = "Unit Tests" },
-          ["<leader>Tl"] = {
-            desc = "List",
-            function() require("neotest").summary.open() end,
-          },
-          ["<leader>Tr"] = {
-            desc = "Run last",
-            function() require("neotest").run.run_last() end,
-          },
-          ["<leader>Tf"] = {
-            desc = "Run current file",
-            function() require("neotest").run.run(vim.fn.expand "%") end,
-          },
-          ["<leader>Tm"] = {
-            desc = "Run marked",
-            function() require("neotest").summary.run_marked() end,
-          },
-          ["<leader>Tn"] = {
-            desc = "Run nearest test",
-            function() require("neotest").run.run() end,
-          },
-          ["<leader>Td"] = {
-            desc = "Run with debug",
-            function() require("neotest").run.run { strategy = "dap" } end,
-          },
-          ["<leader>r"] = {
-            name = "Rest Requests",
-          },
-          ["<leader>rr"] = {
-            desc = "Run request under cursor",
-            "<cmd>Rest run<cr>",
-          },
-          ["<leader>rl"] = {
-            desc = "Run last request",
-            "<cmd>Rest run last<cr>",
-          },
-          ["<leader>k"] = {
-            desc = "Toggle LazyDocker",
-            "<cmd>LazyDocker<CR>",
-          },
-          ["<leader>dt"] = {
-            desc = "Telescope dap",
-          },
-          ["<leader>dtb"] = {
-            desc = "List break points",
-            "<cmd>Telescope dap list_breakpoints<CR>",
-          },
-          ["<leader>dtc"] = {
-            desc = "Commands",
-            "<cmd>Telescope dap commands<CR>",
-          },
-          ["<leader>dtf"] = {
-            desc = "Frames",
-            "<cmd>Telescope dap frames<CR>",
-          },
-          ["<leader>dtv"] = {
-            desc = "Variables",
-            "<cmd>Telescope dap variables<CR>",
-          },
-          ["<leader>K"] = {
-            desc = "Kubectl",
-            function() require("kubectl").toggle() end,
-          },
-        },
-        t = {},
-        v = {
-          ["<leader>lj"] = {
-            desc = "Format select JSON",
-            ":'<,'>!python3 -m json.tool<cr>",
-          },
-          ["<leader>gf"] = { ":'<,'>Browsher commit<CR>gv", desc = "Open file on github" }, -- change description but the same command
-        },
-        i = {
-          ["<C-CR>"] = {
-            desc = "Apply copilot suggestions",
-            'copilot#Accept("<CR>")',
-          },
-        },
-      },
-    },
-  },
+	{
+		"AstroNvim/astrocore",
+		---@type AstroCoreOpts
+		opts = {
+			mappings = {
+				-- first key is the mode
+				n = {
+					["<leader>lF"] = {
+						function()
+							require("conform").format({ async = true, lsp_fallback = false })
+						end,
+						desc = "Format selection",
+					}, -- change description but the same command
+					["<leader>gf"] = { ":Browsher commit<cr>", desc = "Open file on github" }, -- change description but the same command
+					-- tables with the `name` key will be registered with which-key if it's installed
+					-- this is useful for naming menus
+					["<leader>T"] = { name = "Unit Tests" },
+					["<leader>Tl"] = {
+						desc = "List",
+						function()
+							require("neotest").summary.open()
+						end,
+					},
+					["<leader>Tr"] = {
+						desc = "Run last",
+						function()
+							require("neotest").run.run_last()
+						end,
+					},
+					["<leader>Tf"] = {
+						desc = "Run current file",
+						function()
+							require("neotest").run.run(vim.fn.expand("%"))
+						end,
+					},
+					["<leader>Tm"] = {
+						desc = "Run marked",
+						function()
+							require("neotest").summary.run_marked()
+						end,
+					},
+					["<leader>Tn"] = {
+						desc = "Run nearest test",
+						function()
+							require("neotest").run.run()
+						end,
+					},
+					["<leader>Td"] = {
+						desc = "Run with debug",
+						function()
+							require("neotest").run.run({ strategy = "dap" })
+						end,
+					},
+					["<leader>k"] = {
+						desc = "Toggle LazyDocker",
+						"<cmd>LazyDocker<CR>",
+					},
+				},
+				t = {},
+				v = {
+					["<leader>lj"] = {
+						desc = "Format select JSON",
+						":'<,'>!python3 -m json.tool<cr>",
+					},
+					["<leader>gf"] = { ":'<,'>Browsher commit<CR>gv", desc = "Open file on github" }, -- change description but the same command
+				},
+				i = {
+					["<leader><CR>"] = {
+						desc = "Apply copilot suggestions",
+						'copilot#Accept("<CR>")',
+					},
+				},
+			},
+		},
+	},
 }
