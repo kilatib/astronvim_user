@@ -15,7 +15,6 @@ return {
         "dockerls",
         "docker_compose_language_service",
         "jsonls",
-        "eslint",
         "marksman",
         "intelephense",
         "yamlls"
@@ -37,9 +36,12 @@ return {
         "pell",
         "codespell",
         "phpcsfixer",
-        "eslint_d",
         "xmlformatter",
-        "xmllint"
+        "xmllint",
+        "tsserver",
+        "ts_ls",
+        "eslnint_d",
+        "biome"
         -- add more arguments for adding more null-ls sources
       })
     end,

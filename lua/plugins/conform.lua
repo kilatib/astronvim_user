@@ -22,8 +22,7 @@ return {
       ["php-cs-fixer"] = {
         command = "vendor/bin/php-cs-fixer",
         args = {
-          "fix",
-          -- "--config=phpcs.xml.dist",
+          "--config=phpcs.xml.dist",
           -- "--rules=@PSR12", -- Formatting preset. Other presets are available, see the php-cs-fixer docs.
           "$FILENAME",
         },
@@ -51,6 +50,6 @@ return {
       },
     },
     notify_on_error = true,
-    -- format_on_save = true,
+    format_on_save = true,
   },
 }

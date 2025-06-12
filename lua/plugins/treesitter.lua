@@ -22,6 +22,7 @@ return {
       "http",
       "json",
       "graphql",
+      "ini",
       -- add more arguments for adding more treesitter parsers
     })
   end,

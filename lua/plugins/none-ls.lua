@@ -49,7 +49,7 @@ return {
         condition = function(utils) return utils.root_has_file "phpcs.xml.dist" end,
       },
       formatting.prettierd.with {
-        extra_filetypes = { "toml", "ts", "js", "svetle", "typescript", "jsonc" },
+        extra_filetypes = { "toml", "ts", "js", "svetle", "typescript", "jsonc", "ini", "conf" },
         env = {
           PRETTIERD_DEFAULT_CONFIG = function()
             local globalFile = vim.fn.expand "~/.config/nvim/lua/plugins/conf/prettier-config/index.json"

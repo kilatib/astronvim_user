@@ -8,7 +8,7 @@ return {
         n = {
           ["<leader>lc"] = { ":Copilot panel<cr>", desc = "Copilot" }, -- change description but the same command
           ["<leader>lF"] = { function ()
-           require("conform").format({ async = true, lsp_fallback = true })
+           require("conform").format({ async = true, lsp_fallback = false })
           end, desc = "Format selection" }, -- change description but the same command
           ["<leader>lce"] = { ":Copilot enable<cr>", desc = "Copilot Enable" }, -- change description but the same command
           ["<leader>gf"] = { ":Browsher commit<cr>", desc = "Open file on github" }, -- change description but the same command

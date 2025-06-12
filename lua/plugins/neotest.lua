@@ -14,8 +14,8 @@ return {
       adapters = {
         require "neotest-jest" {
           jestCommand = "npm test --",
-          jestConfigFile = "jest.config.js",
-          env = { CI = true, TZ = UTC, NODE_ENV=test },
+          -- jestConfigFile = "jest.config.js",
+          env = { CI = true, TZ = UTC, NODE_ENV = test },
           cwd = function(path) return vim.fn.getcwd() end,
         },
         require "neotest-phpunit" {

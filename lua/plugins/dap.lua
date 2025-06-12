@@ -44,6 +44,38 @@ return {
               return portData
             end,
           },
+          {
+            type = "node2",
+            request = "attach",
+            name = "PaymentsBe",
+            localRoot = "${workspaceFolder}",
+            remoteRoot = "/usr/src/app",
+            port = function()
+              local portHandle =
+                io.popen "docker inspect -f '{{ (index (index .NetworkSettings.Ports \"9229/tcp\") 1).HostPort }}' nextgen_tao_payments_be"
+              local portData = tonumber(portHandle:read "*a")
+              portHandle:close()
+
+              print("portData: " .. portData)
+              return portData
+            end,
+          },
+          {
+            type = "node2",
+            request = "attach",
+            name = "PortalBe",
+            localRoot = "${workspaceFolder}",
+            remoteRoot = "/usr/src/app",
+            port = function()
+              local portHandle =
+                io.popen "docker inspect -f '{{ (index (index .NetworkSettings.Ports \"9229/tcp\") 1).HostPort }}' nextgen_tao_portal_be"
+              local portData = tonumber(portHandle:read "*a")
+              portHandle:close()
+
+              print("portData: " .. portData)
+              return portData
+            end,
+          },
         }
         require("mason-nvim-dap").default_setup(config)
       end,
@@ -55,6 +87,21 @@ return {
             type = "php",
             request = "launch",
             name = "DeliveryBe",
+            port = 9003,
+            -- stopOnEntry = true,
+            -- pathMappings =
+            --   ["/var/www/html"] = "${workspaceFolder}/tao-deliver-be",
+            --   ["/var/www/router.php"] = "${workspaceFolder}/docker/resources/router.php",
+            -- },
+            pathMappings = {
+              ["/var/www/html"] = "${workspaceFolder}",
+              ["/var/www/router.php"] = "${workspaceFolder}/../docker/resources/router.php",
+            },
+          },
+          {
+            type = "php",
+            request = "launch",
+            name = "ProctoringLtiGaterwayBe",
             port = 9003,
             -- stopOnEntry = true,
             -- pathMappings =

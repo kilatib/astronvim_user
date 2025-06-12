@@ -34,7 +34,7 @@ args=("${args//(*}")
 
 if [ $(docker ps -a --filter "name=$containerName" --format '{{.Names}}' | grep -w "$containerName" | wc -l) -eq 1 ]; then 
     # Detect path
-    phpunitPath=$(docker exec -it $containerName /bin/bash -c "if [ -f vendor/bin/phpunit ]; then echo vendor/bin/simple-phpunit; else echo bin/phpunit; fi" | tr -d '\r')
+    phpunitPath=$(docker exec -it $containerName /bin/bash -c "if [ -f vendor/bin/simple-phpunit ]; then echo vendor/bin/simple-phpunit; else echo bin/phpunit; fi" | tr -d '\r')
     execPath=$(docker exec -it $containerName /bin/bash -c "if [ -f /bin/sh ]; then echo /bin/sh; else echo /bin/bash; fi" | tr -d '\r')
     container=$(docker ps -n=-1 --filter name=$containerName --format="{{.ID}}")
     dockerPath=$(docker inspect --format {{.Config.WorkingDir}} $container)
