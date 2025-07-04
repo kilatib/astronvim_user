@@ -8,6 +8,7 @@ return {
 			php = { "php-cs-fixer" },
 			lua = { "stylua" },
 			xml = { "xmlformatter" },
+			jsonnet = { "jsonnetfmt" },
 			["xml.dist"] = { "xmlformatter" },
 
 			-- You can customize some of the format options for the filetype (:help conform.format)
