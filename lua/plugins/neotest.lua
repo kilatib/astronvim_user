@@ -8,21 +8,40 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		"olimorris/neotest-phpunit",
 		"nvim-neotest/neotest-jest",
+		"marilari88/neotest-vitest",
 	},
 	config = function()
 		require("neotest").setup({
 			adapters = {
+				require("neotest-vitest"),
 				require("neotest-jest")({
-					jestCommand = "npm test --",
+					-- jestCommand = "npm test --",
+					jestCommand = require("neotest-jest.jest-util").getJestCommand(vim.fn.expand("%:p:h"))
+						.. " --detectOpenHandles",
 					-- jestConfigFile = "jest.config.js",
 					env = { CI = true, TZ = UTC, NODE_ENV = test },
 					cwd = function(file)
 						return vim.fn.fnamemodify(file, ":h")
 					end,
+					jest_test_discovery = false,
+					discovery = {
+						enabled = false,
+					},
+					jestConfigFile = function(file)
+						if file:find("/") then
+							local match = file:match("(.*/[^/]+/)src")
+
+							if match then
+								return match .. "jest.config.js"
+							end
+						end
+
+						return vim.fn.getcwd() .. "/jest.config.js"
+					end,
 				}),
 				require("neotest-phpunit")({
 					root_files = { "composer.json", "phpunit.xml", "phpunit.xml.dist", ".github" },
-					filter_dirs = { "src" },
+					filter_dirs = { "src", "vendor" },
 					env = {
 						REMOTE_PHPUNIT_BIN = "bin/phpunit",
 						XDEBUG_CONFIG = "idekey=neotest",

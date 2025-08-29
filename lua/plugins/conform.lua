@@ -21,7 +21,7 @@ return {
 		},
 		formatters = {
 			["php-cs-fixer"] = {
-				command = "vendor/bin/php-cs-fixer",
+				command = "/opt/homebrew/bin/php-cs-fixer",
 				env = { PHP_CS_FIXER_IGNORE_ENV = "1" },
 				args = {
 					"fix",

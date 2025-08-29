@@ -9,6 +9,8 @@ brew install -f gdu
 brew install bottom
 brew install watch fswatch
 brew install eslint_d
+brew install php-cs-fixer
+brew install prettier
 
 cd lua/plugins/conf
 git clone git@github.com:oat-sa/prettier-config.git
