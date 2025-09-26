@@ -2,7 +2,7 @@
 
 local M = {}
 
--- Ваш шаблон лицензии. Убедитесь, что здесь УЖЕ указан НОВЫЙ адрес.
+-- Ваш шаблон лицензии
 local license_template = [[
 /**
  * This program is free software; you can redistribute it and/or
@@ -36,12 +36,8 @@ function M.update_or_add_license_header()
 			break
 		end
 
-		-- ===================================================================
-		-- НОВЫЙ БЛОК: Проверка и замена старого адреса FSF
-		-- ===================================================================
-		-- Ищем строку со старым адресом "51 Franklin Street"
+		-- Ищем и заменяем старый адрес FSF
 		if line:find("Foundation, Inc., 51 Franklin Street") then
-			-- Заменяем ее на новый адрес
 			local new_address_line = "* 31 Milk St # 960789 Boston, MA 02196 USA."
 			vim.api.nvim_buf_set_lines(buf, i - 1, i, false, { new_address_line })
 		end
@@ -51,14 +47,24 @@ function M.update_or_add_license_header()
 			header_found = true
 			local new_copyright_line = line
 
-			local start_year, end_year = line:match("Copyright %(c%) (%d%d%d%d) %- (%d%d%d%d)")
+			-- ===================================================================
+			-- ГЛАВНОЕ ИСПРАВЛЕНИЕ: Паттерн теперь ищет дефис с НЕОБЯЗАТЕЛЬНЫМИ пробелами вокруг (%s*-%s*)
+			-- ===================================================================
+			local start_year, end_year = line:match("Copyright %(c%) (%d%d%d%d)%s*-%s*(%d%d%d%d)")
+
 			if start_year and end_year then
+				-- Диапазон найден. Обновляем, если конечный год устарел.
 				if tonumber(current_year) > tonumber(end_year) then
-					new_copyright_line = line:gsub(end_year, current_year)
+					-- При обновлении приводим к единому формату "YYYY - YYYY" с пробелами
+					local old_range = start_year .. "%s*-%s*" .. end_year
+					local new_range = start_year .. " - " .. current_year
+					new_copyright_line = line:gsub(old_range, new_range)
 				end
 			else
+				-- И ТОЛЬКО ЕСЛИ диапазон НЕ найден, ищем один год
 				local single_year = line:match("Copyright %(c%) (%d%d%d%d)")
 				if single_year then
+					-- Один год найден. Превращаем в диапазон, если год устарел.
 					if tonumber(current_year) > tonumber(single_year) then
 						local new_range = single_year .. " - " .. current_year
 						new_copyright_line = line:gsub(single_year, new_range)
@@ -69,6 +75,8 @@ function M.update_or_add_license_header()
 			if new_copyright_line ~= line then
 				vim.api.nvim_buf_set_lines(buf, i - 1, i, false, { new_copyright_line })
 			end
+
+			break -- Прекращаем поиск, так как лицензия обработана
 		end
 	end
 
@@ -102,7 +110,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	callback = M.update_or_add_license_header,
 })
 
--- Пользовательская команда, которая теперь обновляет и адрес, и год
+-- Пользовательская команда
 vim.api.nvim_create_user_command("AddLicense", M.update_or_add_license_header, {})
 
 return M
