@@ -1,0 +1,108 @@
+-- ~/.config/nvim/lua/custom/license_header.lua
+
+local M = {}
+
+-- Ваш шаблон лицензии. Убедитесь, что здесь УЖЕ указан НОВЫЙ адрес.
+local license_template = [[
+/**
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; under version 2
+ * of the License (non-upgradable).
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * 31 Milk St # 960789 Boston, MA 02196 USA.
+ *
+ * Copyright (c) {date} (original work) Open Assessment Technologies SA ;
+ */
+]]
+
+-- Основная функция для добавления или обновления лицензии
+function M.update_or_add_license_header()
+	local buf = vim.api.nvim_get_current_buf()
+	local current_year = os.date("%Y")
+	local header_found = false
+	local all_lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+
+	-- Ищем существующий заголовок в первых 30 строках
+	for i, line in ipairs(all_lines) do
+		if i > 30 then
+			break
+		end
+
+		-- ===================================================================
+		-- НОВЫЙ БЛОК: Проверка и замена старого адреса FSF
+		-- ===================================================================
+		-- Ищем строку со старым адресом "51 Franklin Street"
+		if line:find("Foundation, Inc., 51 Franklin Street") then
+			-- Заменяем ее на новый адрес
+			local new_address_line = "* 31 Milk St # 960789 Boston, MA 02196 USA."
+			vim.api.nvim_buf_set_lines(buf, i - 1, i, false, { new_address_line })
+		end
+
+		-- Ищем строку с Copyright для обновления года
+		if line:find("Copyright %(c%)") then
+			header_found = true
+			local new_copyright_line = line
+
+			local start_year, end_year = line:match("Copyright %(c%) (%d%d%d%d) %- (%d%d%d%d)")
+			if start_year and end_year then
+				if tonumber(current_year) > tonumber(end_year) then
+					new_copyright_line = line:gsub(end_year, current_year)
+				end
+			else
+				local single_year = line:match("Copyright %(c%) (%d%d%d%d)")
+				if single_year then
+					if tonumber(current_year) > tonumber(single_year) then
+						local new_range = single_year .. " - " .. current_year
+						new_copyright_line = line:gsub(single_year, new_range)
+					end
+				end
+			end
+
+			if new_copyright_line ~= line then
+				vim.api.nvim_buf_set_lines(buf, i - 1, i, false, { new_copyright_line })
+			end
+		end
+	end
+
+	-- Если заголовок не был найден и файл не пустой, добавляем его
+	if not header_found and #all_lines > 0 and not (#all_lines == 1 and all_lines[1] == "") then
+		local final_license_text = license_template:gsub("{date}", current_year)
+		local license_lines = vim.split(final_license_text, "\n")
+		vim.api.nvim_buf_set_lines(buf, 0, 0, false, license_lines)
+	end
+end
+
+-- Создаем группу автокоманд
+local group = vim.api.nvim_create_augroup("AutoLicenseHeader", { clear = true })
+
+-- Автокоманда для добавления лицензии в НОВЫЕ файлы
+vim.api.nvim_create_autocmd("BufNewFile", {
+	pattern = { "*.js", "*.ts", "*.php" },
+	group = group,
+	callback = function()
+		local current_year = os.date("%Y")
+		local final_license_text = license_template:gsub("{date}", current_year)
+		local license_lines = vim.split(final_license_text, "\n")
+		vim.api.nvim_buf_set_lines(0, 0, 0, false, license_lines)
+	end,
+})
+
+-- Автокоманда для ОБНОВЛЕНИЯ лицензии ПЕРЕД СОХРАНЕНИЕМ
+vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = { "*.js", "*.ts", "*.php" },
+	group = group,
+	callback = M.update_or_add_license_header,
+})
+
+-- Пользовательская команда, которая теперь обновляет и адрес, и год
+vim.api.nvim_create_user_command("AddLicense", M.update_or_add_license_header, {})
+
+return M

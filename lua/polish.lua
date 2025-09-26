@@ -8,9 +8,6 @@ vim.api.nvim_set_hl(
 	{ fg = "red", underline = true }
 )
 
-local copilot_options = { silent = true, expr = true, script = true }
-vim.api.nvim_set_keymap("i", "<C-cr>", "copilot#Accept(<Tab>)", copilot_options)
-
 -- Set up custom filetypes
 vim.filetype.add({
 	extension = {
