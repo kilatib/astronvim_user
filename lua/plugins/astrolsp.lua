@@ -61,12 +61,17 @@ return {
 			intelephense = function(_, opts)
 				local capabilities = vim.lsp.protocol.make_client_capabilities()
 				capabilities.textDocument.completion.completionItem.snippetSupport = true
+				local function get_secret(secret_ref)
+					return vim.fn.trim(vim.fn.system("op read " .. secret_ref))
+				end
+				local intelephense_key_ref = "op://Private/Intelephense/LICENCE KEYS"
 
 				require("lspconfig").intelephense.setup({
 					capabilities = capabilities,
 					on_attach = opts.on_attach,
 					init_options = {
-						licenceKey = "00Q152AEXSCX41B",
+						licenceKey = get_secret(intelephense_key_ref),
+						globalStoragePath = vim.fn.stdpath("data") .. "/intelephense",
 					},
 					settings = {
 						intelephense = {
