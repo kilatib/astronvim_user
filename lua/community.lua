@@ -12,5 +12,4 @@ return {
 	{ import = "astrocommunity.colorscheme.gruvbox-nvim" },
 	{ import = "astrocommunity.colorscheme.dracula-nvim" },
 	{ import = "astrocommunity.colorscheme.catppuccin" },
-	{ import = "astrocommunity.completion.copilot-lua-cmp" },
 }
