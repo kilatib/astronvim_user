@@ -33,7 +33,7 @@ return {
 				stdin = false,
 			},
 			["prettierd"] = {
-				command = "prettierd",
+				command = "/opt/homebrew/bin/prettierd",
 				env = {
 					string.format(
 						"PRETTIERD_DEFAULT_CONFIG=%s",
