@@ -65,12 +65,6 @@ return {
 					},
 					["<leader>gf"] = { ":'<,'>Browsher commit<CR>gv", desc = "Open file on github" }, -- change description but the same command
 				},
-				i = {
-					["<leader><CR>"] = {
-						desc = "Apply copilot suggestions",
-						'copilot#Accept("<CR>")',
-					},
-				},
 			},
 		},
 	},
