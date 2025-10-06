@@ -1,6 +1,15 @@
 return {
 	"kiddos/gemini.nvim",
-	opts = {},
+	opts = {
+		completion = {
+			enabled = true,
+			insert_result_key = "<Space><CR>",
+		},
+	},
+	hints = {
+		enabled = true,
+		insert_result_key = "<Space><CR>",
+	},
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 	},

@@ -15,7 +15,7 @@ require("lazy").setup({
 	{ import = "plugins" },
 } --[[@as LazySpec]], {
 	-- Configure any other `lazy.nvim` configuration options here
-	install = { colorscheme = { "astrotheme", "habamax", "darcula-dark", "dracula", "jb", "grubox" } },
+	install = { colorscheme = { "astrotheme", "habamax", "darcula-dark", "dracula", "jb", "grubox", "tokyonight" } },
 	ui = { backdrop = 100 },
 	performance = {
 		rtp = {

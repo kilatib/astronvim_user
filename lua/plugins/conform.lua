@@ -18,6 +18,10 @@ return {
 			typescript = { "prettierd", "prettier", stop_after_first = true },
 			svetle = { "prettierd", "prettier", stop_after_first = true },
 			html = { "htmlbeautifier" },
+
+			bash = { "shfmt", "shellcheck" },
+			zsh = { "shfmt", "shellcheck" },
+			sh = { "shfmt", "shellcheck" },
 		},
 		formatters = {
 			["php-cs-fixer"] = {
