@@ -3,12 +3,12 @@ return {
 	opts = {
 		completion = {
 			enabled = true,
-			insert_result_key = "<Space><CR>",
+			insert_result_key = "<Tab><Tab>",
 		},
 	},
 	hints = {
 		enabled = true,
-		insert_result_key = "<Space><CR>",
+		insert_result_key = "<Tab><Tab>",
 	},
 	dependencies = {
 		"nvim-lua/plenary.nvim",

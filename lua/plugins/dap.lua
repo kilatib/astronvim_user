@@ -94,6 +94,18 @@ return {
 					{
 						type = "php",
 						request = "launch",
+						name = "TAO-CE:lti1p3gateway",
+						port = 9003,
+						-- stopOnEntry = true,
+						pathMappings = {
+							["/opt/tao-ce/proctoring/lti1p3-gateway"] = "${workspaceFolder}",
+							["/opt/tao-ce/proctoring/lti1p3-gateway/router.php"] = "${workspaceFolder}/../../router.php",
+							["/opt/tao-ce/proctoring/lti1p3-gateway/public/router.php"] = "${workspaceFolder}/../../router.php",
+						},
+					},
+					{
+						type = "php",
+						request = "launch",
 						name = "DeliveryBe",
 						port = 9003,
 						-- stopOnEntry = true,

@@ -9,6 +9,7 @@ return {
 			lua = { "stylua" },
 			xml = { "xmlformatter" },
 			jsonnet = { "jsonnetfmt" },
+			libsonnet = { "jsonnetfmt" },
 			["xml.dist"] = { "xmlformatter" },
 
 			-- You can customize some of the format options for the filetype (:help conform.format)
@@ -55,6 +56,9 @@ return {
 					".prettierrc.config.js",
 					"package.json",
 				},
+			},
+			jsonnetfmt = {
+				args = { "--indent", 2, "-" },
 			},
 		},
 		notify_on_error = true,
