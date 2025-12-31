@@ -17,7 +17,6 @@ return {
 				"docker-compose-language-service",
 				"typescript-language-server",
 				"json-to-struct",
-				"marksman",
 				"intelephense",
 				"yaml-language-server",
 
