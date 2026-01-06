@@ -56,6 +56,8 @@ return {
 						desc = "Toggle LazyDocker",
 						"<cmd>LazyDocker<CR>",
 					},
+					["<Leader>cc"] = { "<cmd>CodeCompanionChat Toggle<cr>", desc = "AI Chat" },
+					["<Leader>ca"] = { "<cmd>CodeCompanionActions<cr>", desc = "AI Actions" },
 				},
 				t = {},
 				v = {
@@ -64,6 +66,8 @@ return {
 						":'<,'>!python3 -m json.tool<cr>",
 					},
 					["<leader>gf"] = { ":'<,'>Browsher commit<CR>gv", desc = "Open file on github" }, -- change description but the same command
+					["ga"] = { "<cmd>CodeCompanionChat Add<cr>", desc = "Add to AI Chat" },
+					["<Leader>ce"] = { "<cmd>CodeCompanion<cr>", desc = "AI Edit" },
 				},
 			},
 		},
