@@ -13,7 +13,11 @@ return {
 	config = function()
 		require("neotest").setup({
 			adapters = {
-				require("neotest-vitest"),
+				require("neotest-vitest")({
+					filter_dir = function(name, rel_path, root)
+						return name ~= "node_modules"
+					end,
+				}),
 				require("neotest-jest")({
 					-- jestCommand = "npm test --",
 					jestCommand = require("neotest-jest.jest-util").getJestCommand(vim.fn.expand("%:p:h"))
