@@ -1,51 +1,40 @@
+local adapterConfig = {
+	adapter = {
+		name = os.getenv("AI_PROVIDER") or "ollama",
+		model = os.getenv("AI_MODEL") or "llama3.1:8b",
+	},
+	tools = {
+		opts = {
+			auto_submit_errors = true, -- Send any errors to the LLM automatically?
+			auto_submit_success = true, -- Send any successful output to the LLM automatically?
+		},
+		["cmd_runner"] = {
+			opts = {
+				require_approval_before = false,
+			},
+		},
+	},
+}
 return {
 	"olimorris/codecompanion.nvim",
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		"nvim-treesitter/nvim-treesitter",
+	},
 	opts = {
-		-- =========================
-		-- Workflow strategy (Agentic)
-		-- =========================
+		completion_provider = "blink",
+		log_level = "DEBUG",
+		display = {
+			diff = {
+				enabled = true,
+				provider = "default", -- default|mini_diff
+			},
+		},
 		strategies = {
-			chat = {
-				adapter = {
-					name = os.getenv("AI_PROVIDER") or "ollama",
-					model = os.getenv("AI_MODEL") or "qwen2.5:7b-instruct",
-				},
-				tools = {
-					["insert_edit_into_file"] = { opts = { rewrite = true, auto_approve = true, allow_unsafe = true } },
-					["files"] = { opts = { recursive = true, auto_approve = true, allow_unsafe = true } },
-					["cmd_runner"] = { opts = { auto_approve = true, allow_unsafe = true } },
-				},
-			},
-			inline = {
-				adapter = {
-					name = os.getenv("AI_PROVIDER") or "ollama",
-					model = os.getenv("AI_MODEL") or "qwen2.5:7b-instruct",
-				},
-				tools = {
-					["insert_edit_into_file"] = { opts = { rewrite = true, auto_approve = true, allow_unsafe = true } },
-					["files"] = { opts = { recursive = true, auto_approve = true, allow_unsafe = true } },
-					["cmd_runner"] = { opts = { auto_approve = true, allow_unsafe = true } },
-				},
-			},
-			agent = {
-				adapter = {
-					name = os.getenv("AI_PROVIDER") or "ollama",
-					model = os.getenv("AI_MODEL") or "qwen2.5:7b-instruct",
-				},
-				tools = {
-					["insert_edit_into_file"] = { opts = { rewrite = true, auto_approve = true, allow_unsafe = true } },
-					["files"] = { opts = { recursive = true, auto_approve = true, allow_unsafe = true } },
-					["cmd_runner"] = { opts = { auto_approve = true, allow_unsafe = true } },
-				},
-			},
-			workflow = {
-				adapter = os.getenv("AI_PROVIDER"),
-				tools = {
-					["insert_edit_into_file"] = { opts = { rewrite = true, auto_approve = true, allow_unsafe = true } },
-					["files"] = { opts = { recursive = true, auto_approve = true, allow_unsafe = true } },
-					["cmd_runner"] = { opts = { auto_approve = true, allow_unsafe = true } },
-				},
-			},
+			chat = adapterConfig,
+			inline = adapterConfig,
+			agent = adapterConfig,
+			workflow = adapterConfig,
 		},
 
 		adapters = {
@@ -64,6 +53,7 @@ return {
 						},
 						parameters = {
 							sync = true,
+							temperature = 0,
 						},
 					})
 				end,
@@ -89,29 +79,37 @@ return {
 
 								return string.format(
 									[[
-### Instructions
-You are a fully autonomous test-fixing agent.
+You are an autonomous test-fixing agent.
 
-RULES:
-- Never ask the user anything.
-- Always act on the target test file: %s
-- Use @{insert_edit_into_file} to overwrite code.
-- Use @{cmd_runner} to run tests.
-- Use @{files} to search project files if needed.
-- Repeat until tests pass.
+ABSOLUTE RULES:
+- Never ask questions
+- Never explain
+- Never chat
+- Never output plain text
+- Only call tools
 
-AUTONOMOUS LOOP:
-1. Analyze test output.
-2. If "Cannot find module", fix imports in the target test file.
-3. If logic errors, fix implementation.
-4. Overwrite files using @{insert_edit_into_file}.
-5. Run the test command again.
+TARGET TEST FILE:
+%s
 
-START IMMEDIATELY:
-Command: %s
+AVAILABLE TOOLS:
+- @{cmd_runner}
+- @{insert_edit_into_file}
+- @{files}
+
+WORKFLOW:
+1. Run tests using @{cmd_runner}
+2. If tests fail:
+   - Fix ONLY the target test file
+   - Use @{insert_edit_into_file}
+3. Repeat until tests pass
+
+FIRST ACTION (MANDATORY):
+Call @{cmd_runner} with this command:
+
+npm test -- %s 2>&1 || true
 ]],
 									context.filename,
-									test_cmd
+									context.filename
 								)
 							end,
 						},
