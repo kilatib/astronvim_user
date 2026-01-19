@@ -24,12 +24,6 @@ return {
 	opts = {
 		completion_provider = "blink",
 		log_level = "DEBUG",
-		display = {
-			diff = {
-				enabled = true,
-				provider = "default", -- default|mini_diff
-			},
-		},
 		strategies = {
 			chat = adapterConfig,
 			inline = adapterConfig,
@@ -54,6 +48,15 @@ return {
 						parameters = {
 							sync = true,
 							temperature = 0,
+						},
+					})
+				end,
+				copilot = function()
+					return require("codecompanion.adapters").extend("copilot", {
+						schema = {
+							model = {
+								default = "gpt-4o", -- Or 'claude-3.5-sonnet'
+							},
 						},
 					})
 				end,
