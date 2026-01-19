@@ -4,6 +4,42 @@ return {
 		"milanglacier/minuet-ai.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = function()
+			local ai_provider = os.getenv("AI_PROVIDER") or "ollama"
+
+			local endpoint
+			local model
+			local api_key_value
+
+			if ai_provider == "openai" then
+				endpoint = "https://api.openai.com/v1/completions"
+				model = os.getenv("OPENAI_MODEL") or "gpt-3.5-turbo-instruct"
+
+				api_key_value = function()
+					local key_file = os.getenv("HOME") .. "/.openai_api_key"
+					local file = io.open(key_file, "r")
+					if file then
+						local key = file:read("*a"):gsub("%s+", "")
+						file:close()
+						return key
+					end
+
+					local env_key = os.getenv("OPENAI_API_KEY")
+					if env_key and env_key ~= "" then
+						return env_key
+					end
+
+					return "MISSING_KEY"
+				end
+			else
+				local host = os.getenv("OLLAMA_ENDPOINT") or "http://localhost:11434"
+				host = host:gsub("/$", "")
+				endpoint = host .. "/v1/completions"
+
+				model = os.getenv("OLLAMA_MODEL") or "qwen2.5-coder:1.5b"
+
+				api_key_value = "TERM"
+			end
+
 			return {
 				provider = "openai_fim_compatible",
 				n_completions = 1,
@@ -22,37 +58,16 @@ return {
 
 				provider_options = {
 					openai_fim_compatible = {
-						-- FIX: Use a function to return the key directly.
-						-- This bypasses the "environment variable" requirement.
-						api_key = function()
-							-- OPTION A: Hardcode for testing (Uncomment and paste key to test immediately)
-							-- return "sk-proj-YOUR_ACTUAL_KEY_HERE"
+						name = ai_provider,
+						end_point = endpoint,
+						model = model,
 
-							-- OPTION B: Best Practice (Read from a file)
-							-- 1. Run in terminal: echo "sk-proj-..." > ~/.openai_api_key
-							-- 2. This code reads it automatically:
-							local key_file = os.getenv("HOME") .. "/.openai_api_key"
-							local file = io.open(key_file, "r")
-							if file then
-								local key = file:read("*a"):gsub("%s+", "") -- Remove whitespace/newlines
-								file:close()
-								return key
-							end
-
-							-- OPTION C: Fallback to env var (only works in Terminal)
-							return os.getenv("OPENAI_API_KEY") or ""
-						end,
-
-						name = "OpenAI",
-						end_point = "https://api.openai.com/v1/completions",
-						model = "gpt-3.5-turbo-instruct",
+						api_key = api_key_value,
 
 						optional = {
 							max_tokens = 256,
-							top_p = 0.9,
 							temperature = 0.2,
 						},
-
 						template = {
 							prompt = function(before, after)
 								return before or ""
@@ -71,7 +86,6 @@ return {
 		end,
 	},
 
-	-- 2. AstroCore (Safe Keymapping)
 	{
 		"AstroNvim/astrocore",
 		opts = {
@@ -89,7 +103,6 @@ return {
 		},
 	},
 
-	-- 3. Blink CMP Integration
 	{
 		"saghen/blink.cmp",
 		dependencies = { "milanglacier/minuet-ai.nvim" },
