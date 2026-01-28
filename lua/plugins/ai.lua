@@ -22,8 +22,6 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 	},
 	opts = {
-		completion_provider = "blink",
-		log_level = "DEBUG",
 		strategies = {
 			chat = adapterConfig,
 			inline = adapterConfig,

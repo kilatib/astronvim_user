@@ -18,6 +18,7 @@ return {
 			javascript = { "prettierd", "prettier", stop_after_first = true },
 			typescript = { "prettierd", "prettier", stop_after_first = true },
 			svetle = { "prettierd", "prettier", stop_after_first = true },
+			tpl = { "prettierd", "prettier", stop_after_first = true },
 			html = { "htmlbeautifier" },
 
 			bash = { "shfmt", "shellcheck" },

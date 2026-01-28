@@ -47,7 +47,7 @@ function M.update_or_add_license_header()
 			if start_year and end_year then
 				if tonumber(current_year) > tonumber(end_year) then
 					local old_range = start_year .. "%s*-%s*" .. end_year
-					local new_range = start_year .. " - " .. current_year
+					local new_range = start_year .. "-" .. current_year
 					new_copyright_line = line:gsub(old_range, new_range)
 				end
 			else
