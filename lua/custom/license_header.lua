@@ -16,7 +16,7 @@ local license_template = [[
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * 31 Milk St # 960789 Boston, MA 02196 USA.
+ * Foundation, Inc., 31 Milk St # 960789 Boston, MA 02196 USA.
  *
  * Copyright (c) {date} (original work) Open Assessment Technologies SA ;
  */
@@ -34,7 +34,7 @@ function M.update_or_add_license_header()
 		end
 
 		if line:find("Foundation, Inc., 51 Franklin Street") then
-			local new_address_line = " * 31 Milk St # 960789 Boston, MA 02196 USA."
+			local new_address_line = " * Foundation, Inc., 31 Milk St # 960789 Boston, MA 02196 USA."
 			vim.api.nvim_buf_set_lines(buf, i - 1, i, false, { new_address_line })
 		end
 

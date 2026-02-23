@@ -68,12 +68,29 @@ return {
 					{
 						type = "node2",
 						request = "attach",
-						name = "PortalBe",
+						name = "PaymentsBe",
 						localRoot = "${workspaceFolder}",
 						remoteRoot = "/usr/src/app",
 						port = function()
 							local portHandle = io.popen(
-								"docker inspect -f '{{ (index (index .NetworkSettings.Ports \"9229/tcp\") 1).HostPort }}' nextgen_tao_portal_be"
+								"docker inspect -f '{{ (index (index .NetworkSettings.Ports \"9229/tcp\") 1).HostPort }}' nextgen_tao_payments_be"
+							)
+							local portData = tonumber(portHandle:read("*a"))
+							portHandle:close()
+
+							print("portData: " .. portData)
+							return portData
+						end,
+					},
+					{
+						type = "node2",
+						request = "attach",
+						name = "DatastoreDataPolicyPipeline",
+						localRoot = "${workspaceFolder}",
+						remoteRoot = "/usr/src/app",
+						port = function()
+							local portHandle = io.popen(
+								"docker inspect -f '{{ (index (index .NetworkSettings.Ports \"9229/tcp\") 1).HostPort }}' nextgen_datastore_data_policy_worker"
 							)
 							local portData = tonumber(portHandle:read("*a"))
 							portHandle:close()
