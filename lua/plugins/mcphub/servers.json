@@ -1,0 +1,47 @@
+{
+  "mcpServers": {
+    "db_ms_be": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://nextgen_user:nextgen_pass@localhost:5432/manual_scoring"
+      ]
+    },
+    "db_ss_be": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://nextgen_user:nextgen_pass@localhost:5432/service_scoring"
+      ]
+    },
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ]
+    },
+    "bash": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-bash"
+      ]
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/vitalii/src/nextgen-stack/docker",
+        "/Users/vitalii/src/nextgen-stack/Makefile",
+        "/Users/vitalii/src/nextgen-stack/tao-deliver-be",
+        "/Users/vitalii/src/nextgen-stack/tao-manual-scoring-be",
+        "/Users/vitalii/src/nextgen-stack/tao-scoring-service-be",
+        "/Users/vitalii/src/nextgen-stack/tao-portal/backend"
+      ]
+    }
+  }
+}
