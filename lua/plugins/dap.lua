@@ -123,41 +123,11 @@ return {
 					{
 						type = "php",
 						request = "launch",
-						name = "DeliveryBe",
+						name = "TAO:PHP:DEBUG",
 						port = 9003,
 						-- stopOnEntry = true,
-						-- pathMappings =
-						--   ["/var/www/html"] = "${workspaceFolder}/tao-deliver-be",
-						--   ["/var/www/router.php"] = "${workspaceFolder}/docker/resources/router.php",
-						-- },
 						pathMappings = {
 							["/var/www/html"] = "${workspaceFolder}",
-							["/var/www/router.php"] = "${workspaceFolder}/../docker/resources/router.php",
-						},
-					},
-					{
-						type = "php",
-						request = "launch",
-						name = "ProctoringLtiGaterwayBe",
-						port = 9003,
-						-- stopOnEntry = true,
-						-- pathMappings =
-						--   ["/var/www/html"] = "${workspaceFolder}/tao-deliver-be",
-						--   ["/var/www/router.php"] = "${workspaceFolder}/docker/resources/router.php",
-						-- },
-						pathMappings = {
-							["/var/www/html"] = "${workspaceFolder}",
-							["/var/www/router.php"] = "${workspaceFolder}/../docker/resources/router.php",
-						},
-					},
-					{
-						type = "php",
-						request = "launch",
-						name = "StudioBe",
-						port = 9003,
-						pathMappings = {
-							["/var/www/html"] = "${workspaceFolder}",
-							["/var/www/html/var"] = "${workspaceFolder}/../tao-studio-be/var",
 							["/var/www/router.php"] = "${workspaceFolder}/../docker/resources/router.php",
 						},
 					},
