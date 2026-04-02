@@ -3,8 +3,17 @@
 ---@type LazySpec
 return {
 	"nvim-treesitter/nvim-treesitter",
-	opts = {
-		ensure_installed = {
+	build = ":TSUpdate",
+	opts = function(_, opts)
+		-- codecompanion maps to markdown Tree-sitter; nvim 0.12 highlighter can error on that
+		-- buffer layout. Skip TS highlight there; parsers/extmarks still work.
+		opts.highlight = vim.tbl_deep_extend("force", opts.highlight or {}, {
+			disable = function(_, bufnr)
+				local ft = vim.bo[bufnr].filetype
+				return ft == "codecompanion" or ft == "codecompanion_input"
+			end,
+		})
+		opts.ensure_installed = {
 			"lua",
 			"vim",
 			"vimdoc",
@@ -33,6 +42,7 @@ return {
 			"typst",
 			"vue",
 			"regex",
-		},
-	},
+		}
+		return opts
+	end,
 }
