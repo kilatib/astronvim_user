@@ -12,6 +12,7 @@ return {
 
 			virtualtext = {
 				auto_trigger_ft = { "*" },
+				show_on_completion_menu = true,
 				keymap = {
 					accept = "<A-y>",
 					accept_line = false,
@@ -26,7 +27,7 @@ return {
 					name = "Ollama",
 					end_point = host .. "/v1/completions",
 					api_key = "TERM",
-					model = os.getenv("MINUET_OLLAMA_MODEL") or "qwen2.5-coder:7b",
+					model = os.getenv("MINUET_OLLAMA_MODEL") or "gemma4:e2b",
 					optional = {
 						max_tokens = 256,
 						temperature = 0,

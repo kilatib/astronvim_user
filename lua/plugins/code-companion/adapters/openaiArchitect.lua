@@ -5,10 +5,10 @@ return require("codecompanion.adapters").extend("openai", {
 	formatted_name = "OpenAI · Architect",
 	schema = {
 		model = {
-			default = os.getenv("OPENAI_ARCHITECT_MODEL") or "gpt-4.1",
+			default = os.getenv("OPENAI_ARCHITECT_MODEL") or "gpt-5.4",
 		},
 	},
-	parameters = {
-		temperature = 0.2,
-	},
+	-- parameters = {
+	-- 	temperature = 0.2,
+	-- },
 })
