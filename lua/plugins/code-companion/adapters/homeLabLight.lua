@@ -1,4 +1,4 @@
-local ollama_env = require("plugins.ollama_env")
+local ollama_env = require("custom.ollama_env")
 
 return require("codecompanion.adapters").extend("ollama", {
 	name = "homeLabLight",

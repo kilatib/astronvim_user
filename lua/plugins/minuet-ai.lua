@@ -2,7 +2,7 @@ return {
 	"milanglacier/minuet-ai.nvim",
 	dependencies = { "nvim-lua/plenary.nvim" },
 	opts = function()
-		local ollama_env = require("plugins.ollama_env")
+		local ollama_env = require("custom.ollama_env")
 		local host = ollama_env.ollama_light_base()
 
 		return {

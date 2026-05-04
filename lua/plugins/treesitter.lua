@@ -6,7 +6,7 @@ return {
 	build = ":TSUpdate",
 	config = function(plugin, opts)
 		require("astronvim.plugins.configs.nvim-treesitter")(plugin, opts)
-		require("plugins.treesitter-query-fix")
+		require("custom.treesitter_query_fix")
 	end,
 	opts = function(_, opts)
 		-- codecompanion maps to markdown Tree-sitter; nvim 0.12 highlighter can error on that
