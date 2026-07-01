@@ -35,7 +35,6 @@ return {
 
 				-- install debuggers
 				"debugpy",
-				"node-debug2-adapter",
 				"php-debug-adapter",
 
 				-- install any other package

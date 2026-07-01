@@ -70,7 +70,7 @@ else
     then 
         phpunitPath=vendor/bin/simple-phpunit; 
     else 
-        phpunitPath=vendor/bin/simple-phpunit; 
+        phpunitPath=/bin/phpunit; 
     fi
     SYMFONY_DEPRECATIONS_HELPER=weak $phpunitPath -d memory_limit=-1 -d xdebug.idekey=deliver-be "${@}" --stop-on-error
 fi 

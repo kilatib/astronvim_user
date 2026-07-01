@@ -2,8 +2,10 @@ return {
 	"jay-babu/mason-nvim-dap.nvim",
 	-- overrides `require("mason-nvim-dap").setup(...)`
 	opts = {
-		ensure_installed = { "php", "node2" },
-		automatic_installation = true,
+		-- `node2` maps to `node-debug2-adapter`, which is no longer shipped by Mason.
+		-- Keep the custom Node attach configs, but skip broken auto-installation on fresh setups.
+		ensure_installed = { "php" },
+		automatic_installation = { exclude = { "node2" } },
 		handlers = {
 			function(config)
 				require("mason-nvim-dap").default_setup(config)

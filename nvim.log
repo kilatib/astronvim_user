@@ -1,2 +1,8 @@
 WRN 2026-04-24T09:10:52.363 ?.37139    server_start:197: Failed to start server: operation not permitted: /var/folders/f_/v5d9fccx4p787pm_qwzpyq6r0000gp/T/nvim.vitalii/jDdohW/nvim.37139.0
 WRN 2026-05-04T10:20:14.213 ?.14288    server_start:197: Failed to start server: operation not permitted: /var/folders/f_/v5d9fccx4p787pm_qwzpyq6r0000gp/T/nvim.vitalii/EOIFjg/nvim.14288.0
+WRN 2026-05-11T09:51:17.609 ?.68398    server_start:197: Failed to start server: operation not permitted: /var/folders/f_/v5d9fccx4p787pm_qwzpyq6r0000gp/T/nvim.vitalii/BXstOf/nvim.68398.0
+WRN 2026-05-11T09:51:17.828 ?.68488    server_start:197: Failed to start server: operation not permitted: /var/folders/f_/v5d9fccx4p787pm_qwzpyq6r0000gp/T/nvim.vitalii/LZiapj/nvim.68488.0
+WRN 2026-05-11T09:51:17.959 ?.68545    server_start:197: Failed to start server: operation not permitted: /var/folders/f_/v5d9fccx4p787pm_qwzpyq6r0000gp/T/nvim.vitalii/MLRQPW/nvim.68545.0
+WRN 2026-05-11T09:51:22.815 ?.69280    server_start:197: Failed to start server: operation not permitted: /var/folders/f_/v5d9fccx4p787pm_qwzpyq6r0000gp/T/nvim.vitalii/befRG5/nvim.69280.0
+WRN 2026-05-11T09:51:22.815 ?.69281    server_start:197: Failed to start server: operation not permitted: /var/folders/f_/v5d9fccx4p787pm_qwzpyq6r0000gp/T/nvim.vitalii/n3EeNR/nvim.69281.0
+WRN 2026-05-11T09:51:22.897 ?.69457    server_start:197: Failed to start server: operation not permitted: /var/folders/f_/v5d9fccx4p787pm_qwzpyq6r0000gp/T/nvim.vitalii/8pyuUk/nvim.69457.0

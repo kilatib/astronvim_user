@@ -23,6 +23,7 @@ if not pcall(require, "lazy") then
 	vim.cmd.quit()
 end
 
+require("custom.deprecations")
 require("lazy_setup")
 require("polish")
 require("custom.license_header")
