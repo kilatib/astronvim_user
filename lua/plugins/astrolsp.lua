@@ -103,41 +103,47 @@ return {
 			},
 		})
 
-		opts.config.typos_lsp = vim.tbl_deep_extend("force", opts.config.typos_lsp or {}, {
-			cmd = { vim.fs.joinpath(mason_bin, "typos-lsp") },
-			filetypes = {
-				"css",
-				"dockerfile",
-				"html",
-				"javascript",
-				"javascriptreact",
-				"json",
-				"jsonc",
-				"lua",
-				"php",
-				"scss",
-				"sh",
-				"toml",
-				"typescript",
-				"typescriptreact",
-				"xml",
-				"yaml",
-			},
-			root_dir = function(fname)
-				local root = vim.fs.dirname(vim.fs.find({
-					"typos.toml",
-					"_typos.toml",
-					".typos.toml",
-					"package.json",
-					"composer.json",
-					"pyproject.toml",
-					"Cargo.toml",
-					".git",
-				}, { path = fname, upward = true })[1])
-				return root or vim.fs.dirname(fname)
-			end,
-			single_file_support = true,
-		})
+			opts.config.typos_lsp = vim.tbl_deep_extend("force", opts.config.typos_lsp or {}, {
+				cmd = { vim.fs.joinpath(mason_bin, "typos-lsp") },
+				filetypes = {
+					"css",
+					"dockerfile",
+					"html",
+					"javascript",
+					"javascriptreact",
+					"json",
+					"jsonc",
+					"lua",
+					"php",
+					"scss",
+					"sh",
+					"toml",
+					"typescript",
+					"typescriptreact",
+					"xml",
+					"yaml",
+				},
+				root_dir = function(bufnr, on_dir)
+					local root = vim.fs.root(bufnr, {
+						"typos.toml",
+						"_typos.toml",
+						".typos.toml",
+						"package.json",
+						"composer.json",
+						"pyproject.toml",
+						"Cargo.toml",
+						".git",
+					})
+					if root then
+						on_dir(root)
+						return
+					end
+
+					local filename = vim.api.nvim_buf_get_name(bufnr)
+					on_dir(filename ~= "" and vim.fs.dirname(filename) or vim.uv.cwd())
+				end,
+				single_file_support = true,
+			})
 
 		return opts
 	end,
