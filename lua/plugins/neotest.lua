@@ -23,7 +23,7 @@ return {
 					jestCommand = require("neotest-jest.jest-util").getJestCommand(vim.fn.expand("%:p:h"))
 						.. " --detectOpenHandles",
 					-- jestConfigFile = "jest.config.js",
-					env = { CI = true, TZ = UTC, NODE_ENV = test },
+					env = { CI = "true", TZ = "UTC", NODE_ENV = "test" },
 					cwd = function(file)
 						return vim.fn.fnamemodify(file, ":h")
 					end,

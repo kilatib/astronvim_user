@@ -15,5 +15,6 @@ return {
 			"fallback",
 		}
 		opts.keymap["<S-Tab>"] = { "snippet_backward", "fallback" }
+		return opts
 	end,
 }

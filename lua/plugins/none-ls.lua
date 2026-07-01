@@ -23,14 +23,6 @@ return {
 		local formatting = null_ls.builtins.formatting
 		local completion = null_ls.builtins.completion
 
-		local cspell = require("cspell")
-		local cspellConfig = {
-			config_file_preferred_name = ".cspell.json",
-			find_json = function()
-				return vim.fn.expand("~/.config/nvim/spell/cspell.json")
-			end,
-		}
-
 		local file_exists = function(file)
 			local f = io.open(file, "r")
 			if f ~= nil then
@@ -59,11 +51,11 @@ return {
 				end,
 			}),
 			formatting.prettierd.with({
-				extra_filetypes = { "toml", "ts", "js", "svetle", "typescript", "jsonc", "ini", "conf" },
+				extra_filetypes = { "toml", "ts", "js", "svelte", "typescript", "jsonc", "ini", "conf" },
 				env = {
 					PRETTIERD_DEFAULT_CONFIG = function()
 						local globalFile = vim.fn.expand("~/.config/nvim/lua/plugins/conf/prettier-config/index.json")
-						local localFile = vim.loop.cwd() .. ".prettierrc.json"
+						local localFile = vim.fs.joinpath(vim.loop.cwd(), ".prettierrc.json")
 						if file_exists(localFile) then
 							return localFile
 						else
@@ -86,8 +78,6 @@ return {
 					}
 				end,
 			}),
-			cspell.diagnostics.with({ config = cspellConfig }),
-			cspell.code_actions.with({ config = cspellConfig }),
 		})
 	end,
 }

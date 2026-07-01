@@ -13,6 +13,13 @@ return {
 			if vim.v.shell_error ~= 0 then return nil end
 			return vim.trim(result)
 		end
+		local mason_bin = vim.fs.joinpath(vim.fn.stdpath("data"), "mason", "bin")
+
+		local function ensure_server(name)
+			if not vim.tbl_contains(opts.servers, name) then
+				table.insert(opts.servers, name)
+			end
+		end
 
 		opts.formatting = vim.tbl_deep_extend("force", opts.formatting or {}, {
 			format_on_save = {
@@ -33,7 +40,9 @@ return {
 
 
 		opts.servers = opts.servers or {}
-		if not vim.tbl_contains(opts.servers, "intelephense") then table.insert(opts.servers, "intelephense") end
+		ensure_server("intelephense")
+		ensure_server("harper_ls")
+		ensure_server("typos_lsp")
 
 		opts.config = opts.config or {}
 
@@ -76,6 +85,58 @@ return {
 					},
 				},
 			},
+		})
+
+		opts.config.harper_ls = vim.tbl_deep_extend("force", opts.config.harper_ls or {}, {
+			cmd = { vim.fs.joinpath(mason_bin, "harper-ls"), "--stdio" },
+			filetypes = {
+				"gitcommit",
+				"markdown",
+				"tex",
+				"text",
+				"typst",
+			},
+			settings = {
+				["harper-ls"] = {
+					userDictPath = vim.fn.expand("~/.config/nvim/spell/harper-dictionary.txt"),
+				},
+			},
+		})
+
+		opts.config.typos_lsp = vim.tbl_deep_extend("force", opts.config.typos_lsp or {}, {
+			cmd = { vim.fs.joinpath(mason_bin, "typos-lsp") },
+			filetypes = {
+				"css",
+				"dockerfile",
+				"html",
+				"javascript",
+				"javascriptreact",
+				"json",
+				"jsonc",
+				"lua",
+				"php",
+				"scss",
+				"sh",
+				"toml",
+				"typescript",
+				"typescriptreact",
+				"xml",
+				"yaml",
+			},
+			root_dir = function(fname)
+				local root = vim.fs.dirname(vim.fs.find({
+					"typos.toml",
+					"_typos.toml",
+					".typos.toml",
+					"package.json",
+					"composer.json",
+					"pyproject.toml",
+					"Cargo.toml",
+					".git",
+				}, { path = fname, upward = true })[1])
+				return root or vim.fs.dirname(fname)
+			end,
+			single_file_support = true,
 		})
 
 		return opts

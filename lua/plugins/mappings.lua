@@ -12,7 +12,12 @@ return {
 						end,
 						desc = "Format selection",
 					}, -- change description but the same command
-					["<leader>gf"] = { ":Browsher commit<cr>", desc = "Open file on github" }, -- change description but the same command
+					["<leader>gf"] = {
+						function()
+							require("custom.github_permalink").open_current_line()
+						end,
+						desc = "Open file on GitHub",
+					},
 					-- tables with the `name` key will be registered with which-key if it's installed
 					-- this is useful for naming menus
 					["<leader>T"] = { name = "Unit Tests" },
@@ -65,7 +70,12 @@ return {
 						desc = "Format select JSON",
 						":'<,'>!python3 -m json.tool<cr>",
 					},
-					["<leader>gf"] = { ":'<,'>Browsher commit<CR>gv", desc = "Open file on github" }, -- change description but the same command
+					["<leader>gf"] = {
+						function()
+							require("custom.github_permalink").open_visual_selection()
+						end,
+						desc = "Open selection on GitHub",
+					},
 					["ga"] = { "<cmd>CodeCompanionChat Add<cr>", desc = "Add to AI Chat" },
 					["<Leader>ce"] = { "<cmd>CodeCompanion<cr>", desc = "AI Edit" },
 				},

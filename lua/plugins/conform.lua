@@ -17,7 +17,7 @@ return {
 			-- Conform will run the first available formatter
 			javascript = { "prettierd", "prettier", stop_after_first = true },
 			typescript = { "prettierd", "prettier", stop_after_first = true },
-			svetle = { "prettierd", "prettier", stop_after_first = true },
+			svelte = { "prettierd", "prettier", stop_after_first = true },
 			tpl = { "prettierd", "prettier", stop_after_first = true },
 			html = { "htmlbeautifier" },
 
@@ -39,23 +39,9 @@ return {
 				stdin = false,
 			},
 			["prettierd"] = {
-				command = "/opt/homebrew/bin/prettierd",
+				inherit = true,
 				env = {
-					string.format(
-						"PRETTIERD_DEFAULT_CONFIG=%s",
-						vim.fn.expand("~/.config/nvim/lua/plugins/conf/prettier-config/index.json")
-					),
-				},
-				args = { "--stdin-filepath", "$FILENAME" },
-				root_patterns = {
-					".prettierrc",
-					".prettierrc.json",
-					".prettierrc.yaml",
-					".prettierrc.yml",
-					".prettierrc.js",
-					".prettierrc.cjs",
-					".prettierrc.config.js",
-					"package.json",
+					PRETTIERD_DEFAULT_CONFIG = vim.fn.expand("~/.config/nvim/lua/plugins/conf/prettier-config/index.json"),
 				},
 			},
 			jsonnetfmt = {

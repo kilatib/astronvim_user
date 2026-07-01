@@ -12,8 +12,20 @@ return {
 			end,
 			node2 = function(config)
 				local dap = require("dap")
-				-- dap.defaults.fallback.switchbuf = "usetab"
-				-- dap.defaults.fallback.switchbuf = "useopen,usetab"
+				local function docker_port(container)
+					return function()
+						local portHandle = io.popen(
+							"docker inspect -f '{{ (index (index .NetworkSettings.Ports \"9229/tcp\") 1).HostPort }}' " .. container
+						)
+						if not portHandle then
+							return nil
+						end
+						local portData = vim.trim(portHandle:read("*a") or "")
+						portHandle:close()
+						return tonumber(portData)
+					end
+				end
+
 				local jsDebugger = {
 					{
 						type = "node2",
@@ -21,17 +33,7 @@ return {
 						name = "SynchronizerBe",
 						localRoot = "${workspaceFolder}",
 						remoteRoot = "/usr/src/app",
-						-- docker inspect -f '{{ (index (index .NetworkSettings.Ports "9229/tcp") 1).HostPort }}' nextgen_tao_synchronizer_be
-						port = function()
-							local portHandle = io.popen(
-								"docker inspect -f '{{ (index (index .NetworkSettings.Ports \"9229/tcp\") 1).HostPort }}' nextgen_tao_synchronizer_be"
-							)
-							local portData = tonumber(portHandle:read("*a"))
-							portHandle:close()
-
-							print("portData: " .. portData)
-							return portData
-						end,
+						port = docker_port("nextgen_tao_synchronizer_be"),
 					},
 					{
 						type = "node2",
@@ -39,16 +41,7 @@ return {
 						name = "TimersBe",
 						localRoot = "${workspaceFolder}",
 						remoteRoot = "/usr/src/app",
-						port = function()
-							local portHandle = io.popen(
-								"docker inspect -f '{{ (index (index .NetworkSettings.Ports \"9229/tcp\") 1).HostPort }}' nextgen_rt_timers"
-							)
-							local portData = tonumber(portHandle:read("*a"))
-							portHandle:close()
-
-							print("portData: " .. portData)
-							return portData
-						end,
+						port = docker_port("nextgen_rt_timers"),
 					},
 					{
 						type = "node2",
@@ -56,16 +49,7 @@ return {
 						name = "PaymentsBe",
 						localRoot = "${workspaceFolder}",
 						remoteRoot = "/usr/src/app",
-						port = function()
-							local portHandle = io.popen(
-								"docker inspect -f '{{ (index (index .NetworkSettings.Ports \"9229/tcp\") 1).HostPort }}' nextgen_tao_payments_be"
-							)
-							local portData = tonumber(portHandle:read("*a"))
-							portHandle:close()
-
-							print("portData: " .. portData)
-							return portData
-						end,
+						port = docker_port("nextgen_tao_payments_be"),
 					},
 					{
 						type = "node2",
@@ -73,33 +57,7 @@ return {
 						name = "PortalBe",
 						localRoot = "${workspaceFolder}",
 						remoteRoot = "/usr/src/app",
-						port = function()
-							local portHandle = io.popen(
-								"docker inspect -f '{{ (index (index .NetworkSettings.Ports \"9229/tcp\") 1).HostPort }}' nextgen_tao_portal_be"
-							)
-							local portData = tonumber(portHandle:read("*a"))
-							portHandle:close()
-
-							print("portData: " .. portData)
-							return portData
-						end,
-					},
-					{
-						type = "node2",
-						request = "attach",
-						name = "PaymentsBe",
-						localRoot = "${workspaceFolder}",
-						remoteRoot = "/usr/src/app",
-						port = function()
-							local portHandle = io.popen(
-								"docker inspect -f '{{ (index (index .NetworkSettings.Ports \"9229/tcp\") 1).HostPort }}' nextgen_tao_payments_be"
-							)
-							local portData = tonumber(portHandle:read("*a"))
-							portHandle:close()
-
-							print("portData: " .. portData)
-							return portData
-						end,
+						port = docker_port("nextgen_tao_portal_be"),
 					},
 					{
 						type = "node2",
@@ -107,16 +65,7 @@ return {
 						name = "DatastoreDataPolicyPipeline",
 						localRoot = "${workspaceFolder}",
 						remoteRoot = "/usr/src/app",
-						port = function()
-							local portHandle = io.popen(
-								"docker inspect -f '{{ (index (index .NetworkSettings.Ports \"9229/tcp\") 1).HostPort }}' nextgen_datastore_data_policy_worker"
-							)
-							local portData = tonumber(portHandle:read("*a"))
-							portHandle:close()
-
-							print("portData: " .. portData)
-							return portData
-						end,
+						port = docker_port("nextgen_datastore_data_policy_worker"),
 					},
 				}
 				dap.configurations.typescript = jsDebugger
