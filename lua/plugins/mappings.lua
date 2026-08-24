@@ -18,6 +18,19 @@ return {
 						end,
 						desc = "Open file on GitHub",
 					},
+					["gs"] = {
+						function()
+							if
+								vim.lsp.get_clients({ bufnr = 0, name = "ts_ls" })[1]
+								and vim.fn.exists(":LspTypescriptGoToSourceDefinition") == 2
+							then
+								vim.cmd("LspTypescriptGoToSourceDefinition")
+								return
+							end
+							vim.lsp.buf.definition()
+						end,
+						desc = "Goto source definition",
+					},
 					-- tables with the `name` key will be registered with which-key if it's installed
 					-- this is useful for naming menus
 					["<leader>T"] = { name = "Unit Tests" },

@@ -1,3 +1,11 @@
+vim.g.loaded_perl_provider = 0
+
+local ruby_host_dir = vim.trim(vim.fn.system({ "ruby", "-e", "print Gem.bindir" }))
+local ruby_host = ruby_host_dir ~= "" and (ruby_host_dir .. "/neovim-ruby-host") or nil
+if ruby_host and vim.fn.executable(ruby_host) == 1 then
+	vim.g.ruby_host_prog = ruby_host
+end
+
 vim.opt.swapfile = false
 vim.opt.spelloptions = "camel"
 vim.opt.spell = true

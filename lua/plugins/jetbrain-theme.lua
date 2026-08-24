@@ -7,5 +7,6 @@ return {
 	},
 	config = function(_, opts)
 		require("jb").setup(opts)
+		require("custom.jb_treesitter_fix")
 	end,
 }

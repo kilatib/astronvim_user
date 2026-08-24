@@ -10,8 +10,12 @@ return {
 	},
 	{
 		"folke/snacks.nvim",
+		priority = 1000,
+		lazy = false,
 		opts = {
+			bigfile = { enabled = true },
 			dashboard = {
+				enabled = true,
 				preset = {
 					header = table.concat({
 						"   ██████╗  █████╗ ████████╗",
@@ -23,7 +27,22 @@ return {
 					}, "\n"),
 				},
 			},
+			input = { enabled = true },
+			notifier = { enabled = true },
+			picker = {
+				enabled = true,
+				ui_select = true,
+			},
+			quickfile = { enabled = true },
+			scope = { enabled = true },
+			words = { enabled = true },
 		},
+		config = function(_, opts)
+			local snacks = require("snacks")
+			snacks.setup(opts)
+			snacks.input.enable()
+			snacks.picker.setup()
+		end,
 	},
 	{ "max397574/better-escape.nvim", enabled = false },
 	{

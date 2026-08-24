@@ -79,13 +79,11 @@ return {
 					{
 						type = "php",
 						request = "launch",
-						name = "TAO-CE:lti1p3gateway",
+						name = "Proctoring:LTI13Gateway",
 						port = 9003,
-						-- stopOnEntry = true,
 						pathMappings = {
-							["/opt/tao-ce/proctoring/lti1p3-gateway"] = "${workspaceFolder}",
-							["/opt/tao-ce/proctoring/lti1p3-gateway/router.php"] = "${workspaceFolder}/../../router.php",
-							["/opt/tao-ce/proctoring/lti1p3-gateway/public/router.php"] = "${workspaceFolder}/../../router.php",
+							["/var/www/html"] = "${workspaceFolder}",
+							["/var/www/router.php"] = "${workspaceFolder}/../../../docker/resources/router.php",
 						},
 					},
 					{
@@ -93,7 +91,26 @@ return {
 						request = "launch",
 						name = "TAO:PHP:DEBUG",
 						port = 9003,
-						-- stopOnEntry = true,
+						pathMappings = {
+							["/var/www/html"] = "${workspaceFolder}",
+							["/var/www/router.php"] = "${workspaceFolder}/../docker/resources/router.php",
+						},
+					},
+					{
+						type = "php",
+						request = "launch",
+						name = "DeliverBe:PHP:DEBUG",
+						port = 9003,
+						pathMappings = {
+							["/var/www/html"] = "${workspaceFolder}",
+							["/var/www/router.php"] = "${workspaceFolder}/../docker/resources/router.php",
+						},
+					},
+					{
+						type = "php",
+						request = "launch",
+						name = "ManualScoring:PHP:DEBUG",
+						port = 9003,
 						pathMappings = {
 							["/var/www/html"] = "${workspaceFolder}",
 							["/var/www/router.php"] = "${workspaceFolder}/../docker/resources/router.php",

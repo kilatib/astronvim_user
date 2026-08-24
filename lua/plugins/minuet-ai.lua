@@ -2,11 +2,9 @@ return {
 	"milanglacier/minuet-ai.nvim",
 	dependencies = { "nvim-lua/plenary.nvim" },
 	opts = function()
-		local ollama_env = require("custom.ollama_env")
-		local host = ollama_env.ollama_light_base()
-
 		return {
-			provider = "openai_fim_compatible",
+			-- OPENAI_API_KEY is read from the environment; never store the key in this file.
+			provider = "openai",
 			n_completions = 1,
 			context_window = 8192,
 
@@ -23,15 +21,12 @@ return {
 			},
 
 			provider_options = {
-				openai_fim_compatible = {
-					name = "Ollama",
-					end_point = host .. "/v1/completions",
-					api_key = "TERM",
-					model = os.getenv("MINUET_OLLAMA_MODEL") or "gemma4:e2b",
+				openai = {
+					model = os.getenv("MINUET_OPENAI_MODEL") or "gpt-5.4-mini",
+					api_key = "OPENAI_API_KEY",
 					optional = {
-						max_tokens = 256,
-						temperature = 0,
-						top_p = 0.9,
+						max_completion_tokens = 128,
+						reasoning_effort = "none",
 					},
 				},
 			},
